@@ -1,4 +1,5 @@
 import type { CSSProperties } from "react";
+import Image from "next/image";
 import type { Pokemon } from "@/types/pokemon";
 import { teinteType } from "@/lib/types";
 import BadgeType from "./BadgeType";
@@ -20,7 +21,7 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
         {numero}
       </span>
       <div className="relative text-center">
-        <img
+        <Image
           src={pokemon.image}
           alt={pokemon.nom}
           width={160}
