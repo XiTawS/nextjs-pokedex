@@ -29,3 +29,11 @@ export type PokemonApi = {
     };
   };
 };
+
+export type DetailsPokemon = {
+  description: string | null;        // texte du jeu le plus récent, en français
+  talent: string | null;             // premier talent non caché : « Brasier »
+  pourcentageFemelles: number | null; // null : asexué
+  evolueDUneAutreEspece: boolean;
+  niveauEvolution: number | null;    // niveau auquel il apparaît, si c'est par le niveau
+};

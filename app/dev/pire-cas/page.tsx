@@ -5,13 +5,23 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import FichePokemon from "@/components/FichePokemon";
 import GrillePokemons from "@/components/GrillePokemons";
-import { demo, demoEvolutions, pireCas, pireCasEvolutions, unSeul } from "@/data/fixtures-pokemon";
+import {
+  demo,
+  demoEvolutions,
+  detailsAsexue,
+  detailsDemo,
+  detailsPireCas,
+  detailsUnSeul,
+  pireCas,
+  pireCasEvolutions,
+  unSeul,
+} from "@/data/fixtures-pokemon";
 
 const JEUX = {
-  demo: { libelle: "Démo", grille: demo, fiche: demo[1], evolutions: demoEvolutions },
-  pire: { libelle: "Pire cas", grille: pireCas, fiche: pireCas[0], evolutions: pireCasEvolutions },
-  vide: { libelle: "Vide", grille: [], fiche: pireCas[6], evolutions: [] },
-  un: { libelle: "Un seul", grille: unSeul, fiche: unSeul[0], evolutions: unSeul },
+  demo: { libelle: "Démo", grille: demo, fiche: demo[1], evolutions: demoEvolutions, details: detailsDemo },
+  pire: { libelle: "Pire cas", grille: pireCas, fiche: pireCas[0], evolutions: pireCasEvolutions, details: detailsPireCas },
+  vide: { libelle: "Vide", grille: [], fiche: pireCas[6], evolutions: [], details: detailsAsexue },
+  un: { libelle: "Un seul", grille: unSeul, fiche: unSeul[0], evolutions: unSeul, details: detailsUnSeul },
 };
 
 type Props = { searchParams: Promise<{ data?: string }> };
@@ -38,7 +48,13 @@ async function Contenu({ searchParams }: Props) {
       </section>
       <section>
         <h2 className="mb-4 text-sm font-semibold uppercase text-gray-500">Fiche</h2>
-        <FichePokemon pokemon={jeu.fiche} evolutions={jeu.evolutions} />
+        <FichePokemon
+          pokemon={jeu.fiche}
+          evolutions={jeu.evolutions}
+          details={jeu.details}
+          precedent="bulbasaur"
+          suivant="ivysaur"
+        />
       </section>
       <nav
         aria-label="Jeu de données"

@@ -1,6 +1,6 @@
 import { cacheLife } from "next/cache";
-import type { Pokemon, PokemonApi } from "@/types/pokemon";
-import { API, versPokemon } from "./conversion";
+import type { DetailsPokemon, Pokemon, PokemonApi } from "@/types/pokemon";
+import { API, formaterNom, versPokemon } from "./conversion";
 
 // Le build pré-génère 151 fiches en parallèle : la PokéAPI refuse parfois une connexion
 // ou répond 429/503. On réessaie deux fois avant d'abandonner.
@@ -36,18 +36,22 @@ type EspecesGraphql = {
   data: { pokemonspecies: { pokemons: { name: string }[]; pokemonspeciesnames: { name: string }[] }[] };
 };
 
+async function appelerGraphql<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
+  const reponse = await fetch(GRAPHQL, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ query, variables }),
+  });
+  if (!reponse.ok) throw new Error(`L'API GraphQL de la PokéAPI a répondu ${reponse.status}`);
+  return reponse.json() as Promise<T>;
+}
+
 // Les 1 025 noms français en une seule requête GraphQL (l'API REST demanderait un appel par espèce).
 // Clé : nom de l'API (« charizard »), valeur : nom français (« Dracaufeu »).
 export async function recupererNomsFrancais(): Promise<Record<string, string>> {
   "use cache";
   cacheLife("days");
-  const reponse = await fetch(GRAPHQL, {
-    method: "POST",
-    headers: { "content-type": "application/json" },
-    body: JSON.stringify({ query: REQUETE_NOMS }),
-  });
-  if (!reponse.ok) throw new Error(`L'API GraphQL de la PokéAPI a répondu ${reponse.status}`);
-  const { data } = (await reponse.json()) as EspecesGraphql;
+  const { data } = await appelerGraphql<EspecesGraphql>(REQUETE_NOMS);
   return Object.fromEntries(
     data.pokemonspecies.flatMap((espece) =>
       espece.pokemons[0] && espece.pokemonspeciesnames[0]
@@ -125,4 +129,52 @@ export async function recupererNomsParType(type: string): Promise<string[]> {
   if (!donnees) return [];
   const duType = new Set(donnees.pokemon.map((p) => p.pokemon.name));
   return tous.filter((nom) => duType.has(nom));
+}
+
+const REQUETE_DETAILS = `query ($id: Int!) {
+  pokemon(where: { id: { _eq: $id } }) {
+    pokemonabilities(where: { is_hidden: { _eq: false } }, order_by: { slot: asc }, limit: 1) {
+      ability { name abilitynames(where: { language_id: { _eq: 5 } }) { name } }
+    }
+    pokemonspecy {
+      gender_rate
+      evolves_from_species_id
+      pokemonspeciesflavortexts(where: { language_id: { _eq: 5 } }, order_by: { version_id: desc }, limit: 1) { flavor_text }
+      pokemonevolutions(limit: 1) { min_level }
+    }
+  }
+}`;
+
+type DetailsGraphql = {
+  data: {
+    pokemon: {
+      pokemonabilities: { ability: { name: string; abilitynames: { name: string }[] } }[];
+      pokemonspecy: {
+        gender_rate: number;
+        evolves_from_species_id: number | null;
+        pokemonspeciesflavortexts: { flavor_text: string }[];
+        pokemonevolutions: { min_level: number | null }[];
+      } | null;
+    }[];
+  };
+};
+
+// Ce que la fiche montre en plus des données de base : description, talent, genre, évolution.
+export async function recupererDetails(id: number): Promise<DetailsPokemon> {
+  "use cache";
+  cacheLife("days");
+  const { data } = await appelerGraphql<DetailsGraphql>(REQUETE_DETAILS, { id });
+  const pokemon = data.pokemon[0];
+  const espece = pokemon?.pokemonspecy;
+  const talent = pokemon?.pokemonabilities[0]?.ability;
+  const texte = espece?.pokemonspeciesflavortexts[0]?.flavor_text;
+  return {
+    // Les textes du jeu contiennent des retours à la ligne et des espaces fines insécables.
+    description: texte ? texte.replace(/\s+/g, " ").replace(/\u202f/g, "\u00a0") : null,
+    talent: talent ? (talent.abilitynames[0]?.name ?? formaterNom(talent.name)) : null,
+    // gender_rate : huitièmes de femelles, -1 pour un Pokémon asexué.
+    pourcentageFemelles: !espece || espece.gender_rate < 0 ? null : (espece.gender_rate / 8) * 100,
+    evolueDUneAutreEspece: Boolean(espece?.evolves_from_species_id),
+    niveauEvolution: espece?.pokemonevolutions[0]?.min_level ?? null,
+  };
 }
