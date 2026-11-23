@@ -46,12 +46,16 @@ export async function recupererListe(limite = 24, decalage = 0): Promise<Pokemon
 }
 
 type Maillon = {
-  species: { name: string };
+  species: { name: string; url: string };
   evolves_to: Maillon[];
 };
 
+// Renvoie les numéros d'espèce, lus dans species.url (".../pokemon-species/710/").
+// Le nom d'espèce ne suffit pas : pour 37 espèces (pumpkaboo, giratina…), /pokemon/{nom} répond 404,
+// alors que /pokemon/{numéro} renvoie toujours la forme par défaut.
 function aplatir(maillon: Maillon): string[] {
-  return [maillon.species.name, ...maillon.evolves_to.flatMap(aplatir)];
+  const numero = maillon.species.url.split("/").filter(Boolean).at(-1)!;
+  return [numero, ...maillon.evolves_to.flatMap(aplatir)];
 }
 
 export async function recupererEvolutions(id: number): Promise<string[]> {
