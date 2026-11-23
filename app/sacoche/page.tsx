@@ -1,8 +1,8 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
 import BadgeType from "@/components/BadgeType";
 import BoutonVider from "@/components/BoutonVider";
+import ImagePokemon from "@/components/ImagePokemon";
 import { useTypesCouverts } from "@/hooks/useTypesCouverts";
 import { formaterNom } from "@/lib/conversion";
 import { TAILLE_SACOCHE, useSacoche } from "@/stores/sacoche";
@@ -39,8 +39,8 @@ export default function PageSacoche() {
               key={membre.id}
               className="flex items-center gap-4 rounded-2xl border border-black/5 bg-white p-4 shadow-sm dark:border-white/10 dark:bg-gray-900"
             >
-              <Image
-                src={membre.image}
+              <ImagePokemon
+                sources={[membre.image]}
                 alt={nomAffiche}
                 width={96}
                 height={96}
