@@ -17,3 +17,17 @@ export async function recupererPokemon(nom: string): Promise<Pokemon | null> {
   const brut = await appeler<PokemonApi>(`/pokemon/${encodeURIComponent(nom.toLowerCase())}`);
   return brut ? versPokemon(brut) : null;
 }
+
+export async function recupererPlusieurs(noms: string[]): Promise<Pokemon[]> {
+  const pokemons = await Promise.all(noms.map(recupererPokemon));
+  return pokemons.filter((p): p is Pokemon => p !== null);
+}
+
+export async function recupererListe(limite = 24, decalage = 0): Promise<Pokemon[]> {
+  "use cache";
+  cacheLife("days");
+  const page = await appeler<{ results: { name: string }[] }>(
+    `/pokemon?limit=${limite}&offset=${decalage}`
+  );
+  return page ? recupererPlusieurs(page.results.map((p) => p.name)) : [];
+}
