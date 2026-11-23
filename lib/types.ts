@@ -26,7 +26,7 @@ export function estType(type: string): boolean {
 
 // Couleur vive du type, pour les grands fonds décoratifs (le texte blanc n'y est pas lisible).
 export function teinteVive(type: string): string {
-  return estType(type) ? `var(--color-vif-${type})` : "var(--color-gray-400)";
+  return estType(type) ? `var(--vif-${type})` : "var(--color-gray-400)";
 }
 
 export function teinteType(type: string): string {

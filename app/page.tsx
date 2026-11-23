@@ -32,14 +32,17 @@ function normaliser(texte: string) {
 export default function Accueil({ searchParams }: Props) {
   return (
     <>
-      <h1 className="mb-6 text-4xl font-black">Pokédex</h1>
+      <header className="mb-6">
+        <h1 className="text-4xl font-semibold tracking-tight">Pokédex</h1>
+        <p className="mt-1 text-gray-500 dark:text-gray-400">Les 1 025 Pokémon, de Bulbizarre à Pêchaminus.</p>
+      </header>
       <Suspense
         fallback={
           <input
             disabled
             placeholder="Rechercher un Pokémon"
             aria-label="Rechercher un Pokémon"
-            className="w-full rounded-full border border-black/10 px-5 py-3"
+            className="w-full rounded-full bg-white py-3 pl-12 pr-5 shadow-sm ring-1 ring-black/10 transition placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-pokedex dark:bg-gray-900 dark:ring-white/15"
           />
         }
       >
@@ -90,8 +93,10 @@ async function Resultats({ parametres }: { parametres: Parametres }) {
 
   return (
     <>
-      <FiltreTypes q={q} typeActif={estType(type) ? type : ""} />
-      <p className="my-4 text-sm text-gray-500">
+      <div className="mt-4">
+        <FiltreTypes q={q} typeActif={estType(type) ? type : ""} />
+      </div>
+      <p className="my-4 text-sm text-gray-500 dark:text-gray-400">
         {formaterNombre(noms.length)} Pokémon
       </p>
       <GrillePokemons pokemons={pokemons} />
