@@ -19,6 +19,11 @@ export const TYPES: Record<string, { libelle: string; classe: string }> = {
   fairy: { libelle: "Fée", classe: "bg-type-fairy" },
 };
 
+// Object.hasOwn plutôt que `in` : "constructor" ou "__proto__" (venus de l'adresse) ne sont pas des types.
+export function estType(type: string): boolean {
+  return Object.hasOwn(TYPES, type);
+}
+
 export function teinteType(type: string): string {
-  return type in TYPES ? `var(--color-type-${type})` : "var(--color-gray-500)";
+  return estType(type) ? `var(--color-type-${type})` : "var(--color-gray-500)";
 }
