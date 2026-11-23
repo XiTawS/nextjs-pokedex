@@ -18,3 +18,7 @@ export const TYPES: Record<string, { libelle: string; classe: string }> = {
   steel: { libelle: "Acier", classe: "bg-type-steel" },
   fairy: { libelle: "Fée", classe: "bg-type-fairy" },
 };
+
+export function teinteType(type: string): string {
+  return type in TYPES ? `var(--color-type-${type})` : "var(--color-gray-500)";
+}

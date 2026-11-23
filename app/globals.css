@@ -20,6 +20,13 @@
   --color-type-dark: #50433a;
   --color-type-steel: #6d6d85;
   --color-type-fairy: #c2528f;
+
+  --animate-apparition: apparition 0.4s ease-out both;
+
+  @keyframes apparition {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
 }
 
 :root {
