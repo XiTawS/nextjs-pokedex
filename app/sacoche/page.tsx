@@ -54,7 +54,7 @@ export default function PageSacoche() {
             <button
               onClick={() => retirer(membre.id)}
               aria-label={`Retirer ${membre.nom} de la sacoche`}
-              className="size-9 rounded-full text-gray-400 transition hover:bg-black/5 hover:text-pokedex"
+              className="size-9 rounded-full text-gray-500 transition hover:bg-black/5 hover:text-pokedex"
             >
               ✕
             </button>
@@ -65,7 +65,7 @@ export default function PageSacoche() {
           <li key={`libre-${i}`}>
             <Link
               href="/"
-              className="grid min-h-32 place-items-center rounded-2xl border-2 border-dashed border-black/15 text-gray-400 transition hover:border-pokedex hover:text-pokedex dark:border-white/15"
+              className="grid min-h-32 place-items-center rounded-2xl border-2 border-dashed border-black/15 text-gray-500 transition hover:border-pokedex hover:text-pokedex dark:border-white/15"
             >
               Emplacement libre
             </Link>

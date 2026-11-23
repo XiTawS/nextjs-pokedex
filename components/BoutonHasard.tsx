@@ -19,7 +19,7 @@ export default function BoutonHasard() {
   };
 
   return (
-    <button onClick={tirer} disabled={enCours} className="opacity-80 hover:opacity-100 disabled:opacity-50">
+    <button onClick={tirer} disabled={enCours} className="underline-offset-4 hover:underline disabled:opacity-50">
       {enCours ? "Tirage…" : "Au hasard"}
     </button>
   );

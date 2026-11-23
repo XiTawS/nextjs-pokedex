@@ -11,7 +11,7 @@ function adresse(q: string, type: string) {
 export default function FiltreTypes({ q, typeActif }: { q: string; typeActif: string }) {
   return (
     <nav className="mt-4 flex flex-wrap gap-2" aria-label="Filtrer par type">
-      <Link href={adresse(q, "")} className={typeActif ? "opacity-60" : "font-bold underline"}>
+      <Link href={adresse(q, "")} className={typeActif ? "text-gray-600 hover:underline dark:text-gray-300" : "font-bold underline"}>
         Tous
       </Link>
       {Object.entries(TYPES).map(([type, style]) => (
@@ -20,7 +20,7 @@ export default function FiltreTypes({ q, typeActif }: { q: string; typeActif: st
           href={adresse(q, type)}
           aria-current={type === typeActif ? "true" : undefined}
           className={`rounded-full px-3 py-0.5 text-xs font-bold text-white ${style.classe} ${
-            type === typeActif ? "ring-2 ring-offset-2" : "opacity-70"
+            type === typeActif ? "ring-2 ring-pokedex ring-offset-2" : "hover:brightness-110"
           }`}
         >
           {style.libelle}
