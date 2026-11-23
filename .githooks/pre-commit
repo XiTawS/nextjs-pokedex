@@ -1,0 +1,8 @@
+#!/bin/sh
+# Bloque les commits directs sur main : on travaille par branche, puis on fusionne.
+# Les fusions (git merge, résolution de conflit) restent autorisées.
+# Contournement exceptionnel : git commit --no-verify
+if [ "$(git symbolic-ref --short HEAD 2>/dev/null)" = "main" ] && [ ! -f "$(git rev-parse --git-dir)/MERGE_HEAD" ]; then
+  echo "Commit direct sur main interdit. Crée une branche : git switch -c feat/etape-1-pokeapi" >&2
+  exit 1
+fi
