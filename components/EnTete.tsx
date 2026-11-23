@@ -1,5 +1,6 @@
 import Link from "next/link";
 import CompteurFavoris from "./CompteurFavoris";
+import IndicateurSacoche from "./IndicateurSacoche";
 
 export default function EnTete() {
   return (
@@ -8,12 +9,13 @@ export default function EnTete() {
         <Link href="/" className="text-xl font-bold">
           Pokédex
         </Link>
-        <nav className="flex gap-4">
+        <nav className="flex items-center gap-4">
           <Link href="/">Tous</Link>
           <Link href="/favoris" className="flex items-center">
             Favoris
             <CompteurFavoris />
           </Link>
+          <IndicateurSacoche />
         </nav>
       </div>
     </header>
