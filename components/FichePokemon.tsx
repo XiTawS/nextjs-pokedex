@@ -25,10 +25,16 @@ export default function FichePokemon({ pokemon, evolutions }: { pokemon: Pokemon
         </div>
         <BarresStats stats={pokemon.stats} />
       </div>
-      <section className="md:col-span-2">
-        <h2 className="mb-4 text-2xl font-bold">Évolutions</h2>
-        <GrillePokemons pokemons={evolutions} />
-      </section>
+      {evolutions.length > 0 && (
+        <section className="md:col-span-2">
+          <h2 className="mb-4 text-2xl font-bold">Évolutions</h2>
+          {evolutions.length === 1 ? (
+            <p className="text-gray-500"><span className="capitalize">{pokemon.nom}</span> n’évolue pas.</p>
+          ) : (
+            <GrillePokemons pokemons={evolutions} />
+          )}
+        </section>
+      )}
     </article>
   );
 }
