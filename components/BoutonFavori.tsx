@@ -10,7 +10,7 @@ export default function BoutonFavori({ nom }: { nom: string }) {
       onClick={() => basculer(nom)}
       aria-pressed={actif}
       aria-label={actif ? `Retirer ${nom} des favoris` : `Ajouter ${nom} aux favoris`}
-      className="text-xl transition active:scale-90"
+      className="grid size-9 place-items-center rounded-full text-xl transition hover:bg-black/5 active:scale-90"
     >
       {actif ? "★" : "☆"}
     </button>

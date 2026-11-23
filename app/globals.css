@@ -2,24 +2,24 @@
 
 @theme {
   --color-pokedex: #d2232f;
-  --color-type-normal: #7b7b6c;
-  --color-type-fire: #d2571c;
+  --color-type-normal: #767668;
+  --color-type-fire: #c3511a;
   --color-type-water: #2f6fd0;
-  --color-type-electric: #9a7400;
-  --color-type-grass: #3f8f3a;
-  --color-type-ice: #2e8f93;
+  --color-type-electric: #946f00;
+  --color-type-grass: #3a8435;
+  --color-type-ice: #297f83;
   --color-type-fighting: #a8322a;
   --color-type-poison: #8a3fa0;
-  --color-type-ground: #9c7a2e;
-  --color-type-flying: #5b78c9;
-  --color-type-psychic: #d43d6c;
-  --color-type-bug: #7c8a1a;
-  --color-type-rock: #8f7d35;
+  --color-type-ground: #90702a;
+  --color-type-flying: #5672bf;
+  --color-type-psychic: #d03c6a;
+  --color-type-bug: #6e7b17;
+  --color-type-rock: #857431;
   --color-type-ghost: #5a4a8c;
   --color-type-dragon: #5a3fd6;
   --color-type-dark: #50433a;
   --color-type-steel: #6d6d85;
-  --color-type-fairy: #c2528f;
+  --color-type-fairy: #b84e88;
 
   --animate-apparition: apparition 0.4s ease-out both;
 

@@ -25,13 +25,13 @@ export default function Pagination(props: Props) {
       {page > 1 ? (
         <Link href={adresse(props, page - 1)} className={style}>Précédent</Link>
       ) : (
-        <span className={`${style} opacity-40`}>Précédent</span>
+        <span aria-disabled="true" className={`${style} opacity-40`}>Précédent</span>
       )}
       <span className="text-sm">Page {page} sur {nombrePages}</span>
       {page < nombrePages ? (
         <Link href={adresse(props, page + 1)} className={style}>Suivant</Link>
       ) : (
-        <span className={`${style} opacity-40`}>Suivant</span>
+        <span aria-disabled="true" className={`${style} opacity-40`}>Suivant</span>
       )}
     </nav>
   );
