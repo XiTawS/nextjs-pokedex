@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { formaterNombre } from "@/lib/conversion";
-import { TYPES, teinteType } from "@/lib/types";
+import { TYPES, teinteType, teinteVive } from "@/lib/types";
 import type { DetailsPokemon, Pokemon } from "@/types/pokemon";
 import { Apparition, Nombre, Remplissage } from "./Anime";
 import BarresStats from "./BarresStats";
@@ -41,7 +41,10 @@ export default function FichePokemon({
   precedent,
   suivant,
 }: Props) {
-  const teinte = { "--teinte": teinteType(pokemon.types[0]) } as CSSProperties;
+  const teinte = {
+    "--teinte": teinteType(pokemon.types[0]), // foncée : barres, texte
+    "--vive": teinteVive(pokemon.types[0]), // vive : grands fonds
+  } as CSSProperties;
   const femelles = details.pourcentageFemelles;
 
   return (
@@ -54,11 +57,11 @@ export default function FichePokemon({
       <section className="relative -mx-4 -mt-6 h-80 sm:mx-0 sm:mt-0 lg:sticky lg:top-6 lg:h-[34rem]">
         <div
           aria-hidden
-          className="absolute inset-0 overflow-hidden rounded-b-[50%_18%] bg-linear-to-br from-(--teinte) to-(--teinte)/70 sm:rounded-t-3xl lg:rounded-3xl"
+          className="absolute inset-0 overflow-hidden rounded-b-[50%_18%] bg-linear-to-br from-(--vive) to-(--vive)/75 sm:rounded-t-3xl lg:rounded-3xl"
         >
           <IconeType
             type={pokemon.types[0]}
-            className="absolute left-1/2 top-8 size-52 -translate-x-1/2 text-white/25 lg:top-1/2 lg:size-96 lg:-translate-y-1/2"
+            className="absolute left-1/2 top-8 size-52 -translate-x-1/2 text-white/30 lg:top-1/2 lg:size-96 lg:-translate-y-1/2"
           />
         </div>
 
@@ -66,7 +69,7 @@ export default function FichePokemon({
           <Link
             href="/"
             aria-label="Retour au Pokédex"
-            className="grid size-10 place-items-center rounded-full text-white transition hover:bg-white/20"
+            className="grid size-10 place-items-center rounded-full bg-white text-gray-900 shadow-md shadow-black/10 transition hover:scale-105 active:scale-95"
           >
             <ArrowLeft className="size-6" />
           </Link>

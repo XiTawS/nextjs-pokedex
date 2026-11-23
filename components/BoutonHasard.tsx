@@ -1,25 +1,16 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { Shuffle } from "lucide-react";
+import { useTirage } from "@/hooks/useTirage";
 
 export default function BoutonHasard() {
-  const router = useRouter();
-  const [enCours, setEnCours] = useState(false);
-
-  const tirer = async () => {
-    setEnCours(true);
-    try {
-      const reponse = await fetch("/api/aleatoire");
-      if (!reponse.ok) throw new Error("Tirage impossible");
-      const pokemon = await reponse.json();
-      router.push(`/pokemon/${pokemon.nom}`);
-    } finally {
-      setEnCours(false);
-    }
-  };
-
+  const { tirer, enCours } = useTirage();
   return (
-    <button onClick={tirer} disabled={enCours} className="underline-offset-4 hover:underline disabled:opacity-50">
+    <button
+      onClick={tirer}
+      disabled={enCours}
+      className="flex items-center gap-1.5 rounded-full bg-pokedex px-4 py-1.5 text-sm font-semibold text-white transition hover:brightness-110 active:scale-95 disabled:opacity-60"
+    >
+      <Shuffle className="size-4" />
       {enCours ? "Tirage…" : "Au hasard"}
     </button>
   );

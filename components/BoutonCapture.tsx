@@ -30,7 +30,7 @@ export default function BoutonCapture({ pokemon }: { pokemon: Pokemon }) {
       aria-pressed={dedans}
       aria-label={dedans ? `Retirer ${pokemon.nomAffiche} de la sacoche` : `Ajouter ${pokemon.nomAffiche} à la sacoche`}
       className={`grid size-10 place-items-center rounded-full transition active:scale-90 ${
-        dedans ? "bg-white text-(--teinte) shadow-md" : "bg-white/20 text-white hover:bg-white/30"
+        dedans ? "bg-pokedex text-white shadow-md shadow-black/10" : "bg-white text-gray-900 shadow-md shadow-black/10 hover:scale-105"
       }`}
     >
       <IconePokeball className="size-6" />

@@ -31,6 +31,29 @@
   }
 }
 
+/* Couleurs vives, pour les fonds décoratifs (en-tête de fiche, cartes) : jamais sous du texte.
+   Variables CSS simples : lues par var() à l'exécution, Tailwind n'a pas à générer de classes. */
+:root {
+  --color-vif-normal: #a8a77a;
+  --color-vif-fire: #ee8130;
+  --color-vif-water: #6390f0;
+  --color-vif-electric: #f7d02c;
+  --color-vif-grass: #7ac74c;
+  --color-vif-ice: #96d9d6;
+  --color-vif-fighting: #c22e28;
+  --color-vif-poison: #a33ea1;
+  --color-vif-ground: #e2bf65;
+  --color-vif-flying: #a98ff3;
+  --color-vif-psychic: #f95587;
+  --color-vif-bug: #a6b91a;
+  --color-vif-rock: #b6a136;
+  --color-vif-ghost: #735797;
+  --color-vif-dragon: #6f35fc;
+  --color-vif-dark: #705746;
+  --color-vif-steel: #b7b7ce;
+  --color-vif-fairy: #d685ad;
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
