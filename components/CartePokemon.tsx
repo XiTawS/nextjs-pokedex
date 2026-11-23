@@ -12,7 +12,11 @@ export default function CartePokemon({ pokemon }: Props) {
       <span>{numero}</span>
       <img src={pokemon.image} alt={pokemon.nom} width={160} height={160} />
       <h2>{pokemon.nom}</h2>
-      <BadgeType type={pokemon.types[0]} />
+      <div>
+        {pokemon.types.map((type) => (
+          <BadgeType key={type} type={type} />
+        ))}
+      </div>
     </article>
   );
 }
