@@ -2,9 +2,17 @@ import type { Pokemon, PokemonApi } from "@/types/pokemon";
 
 export const API = "https://pokeapi.co/api/v2";
 
+// « 1 025 », « 999,9 » : séparateurs français.
+export const formaterNombre = new Intl.NumberFormat("fr-FR", {
+  maximumFractionDigits: 1,
+}).format;
+
 // Repli quand le nom français manque (formes comme « charizard-mega-x ») : « Charizard Mega X ».
 export function formaterNom(nom: string): string {
-  return nom.split("-").map((mot) => mot.charAt(0).toUpperCase() + mot.slice(1)).join(" ");
+  return nom
+    .split("-")
+    .map((mot) => mot.charAt(0).toUpperCase() + mot.slice(1))
+    .join(" ");
 }
 
 export function versPokemon(brut: PokemonApi, nomFrancais?: string): Pokemon {
