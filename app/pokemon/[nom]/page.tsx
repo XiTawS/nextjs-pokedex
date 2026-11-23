@@ -1,12 +1,7 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
-import BadgeType from "@/components/BadgeType";
-import BarresStats from "@/components/BarresStats";
-import BoutonFavori from "@/components/BoutonFavori";
-import BoutonSacoche from "@/components/BoutonSacoche";
-import GrillePokemons from "@/components/GrillePokemons";
+import FichePokemon from "@/components/FichePokemon";
 import {
   recupererEvolutions,
   recupererPlusieurs,
@@ -51,28 +46,5 @@ async function Fiche({ params }: Props) {
 
   const evolutions = await recupererPlusieurs(await recupererEvolutions(pokemon.id));
 
-  return (
-    <article className="grid gap-8 md:grid-cols-2">
-      <Image src={pokemon.image} alt={pokemon.nom} width={400} height={400} loading="eager" />
-      <div>
-        <p className="font-mono text-gray-500">#{String(pokemon.id).padStart(3, "0")}</p>
-        <div className="mb-2 flex items-center gap-3">
-          <h1 className="text-4xl font-bold capitalize">{pokemon.nom}</h1>
-          <BoutonFavori nom={pokemon.nom} />
-        </div>
-        <div className="mb-4 flex gap-2">
-          {pokemon.types.map((type) => <BadgeType key={type} type={type} />)}
-        </div>
-        <p className="mb-4">{pokemon.taille} m · {pokemon.poids} kg</p>
-        <div className="mb-6">
-          <BoutonSacoche pokemon={pokemon} />
-        </div>
-        <BarresStats stats={pokemon.stats} />
-      </div>
-      <section className="md:col-span-2">
-        <h2 className="mb-4 text-2xl font-bold">Évolutions</h2>
-        <GrillePokemons pokemons={evolutions} />
-      </section>
-    </article>
-  );
+  return <FichePokemon pokemon={pokemon} evolutions={evolutions} />;
 }
