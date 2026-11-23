@@ -9,7 +9,7 @@ export default function LienNav({ href, children }: { href: string; children: Re
     <Link
       href={href}
       aria-current={actif ? "page" : undefined}
-      className={`inline-flex items-center underline-offset-4 ${actif ? "font-bold underline" : "hover:underline"}`}
+      className={`inline-flex items-center text-sm font-medium transition ${actif ? "text-pokedex" : "text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"}`}
     >
       {children}
     </Link>

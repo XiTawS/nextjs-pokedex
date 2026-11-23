@@ -3,8 +3,10 @@ import "./globals.css";
 import type { Metadata } from "next";
 import EnTete from "@/components/EnTete";
 import HydratationStores from "@/components/HydratationStores";
+import NavigationMobile, { Barre } from "@/components/NavigationMobile";
 import PiedDePage from "@/components/PiedDePage";
 import { Theme } from "@astryxdesign/core/theme";
+import { Suspense } from "react";
 import { defaultThemeSlug, themes } from "@/astryx-themes";
 
 export const metadata: Metadata = {
@@ -21,6 +23,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <EnTete />
           <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-6">{children}</main>
           <PiedDePage />
+          <Suspense fallback={<Barre chemin={null} />}>
+            <NavigationMobile />
+          </Suspense>
         </Theme>
       </body>
     </html>
