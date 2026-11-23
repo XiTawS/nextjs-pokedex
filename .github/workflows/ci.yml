@@ -6,8 +6,8 @@ on:
   pull_request:
 
 jobs:
-  validate-title:
-    name: Validate title
+  checks:
+    name: Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
