@@ -8,7 +8,8 @@ import IconeType from "./IconeType";
 import ImagePokemon from "./ImagePokemon";
 
 // Une carte de la grille, dans l'esprit de la fiche : haut coloré et arrondi, icône du type en filigrane.
-export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
+// prioritaire : cartes visibles dès l'arrivée (première rangée), chargées en premier.
+export default function CartePokemon({ pokemon, prioritaire = false }: { pokemon: Pokemon; prioritaire?: boolean }) {
   const numero = `#${String(pokemon.id).padStart(3, "0")}`;
   const teinte = { "--vive": teinteVive(pokemon.types[0]) } as CSSProperties;
 
@@ -37,8 +38,10 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
           <ImagePokemon
             sources={[pokemon.image]}
             alt={pokemon.nomAffiche}
-            width={160}
-            height={160}
+            width={128}
+            height={128}
+            loading={prioritaire ? "eager" : "lazy"}
+            fetchPriority={prioritaire ? "high" : "auto"}
             className="relative -mt-2 size-32 object-contain drop-shadow-lg transition duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
           />
           <h2 className="relative mt-1 text-center text-base font-semibold tracking-tight wrap-anywhere">
