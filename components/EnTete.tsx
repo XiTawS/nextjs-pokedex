@@ -1,6 +1,8 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import CompteurFavoris from "./CompteurFavoris";
 import IndicateurSacoche from "./IndicateurSacoche";
+import LienNav from "./LienNav";
 
 export default function EnTete() {
   return (
@@ -10,11 +12,15 @@ export default function EnTete() {
           Pokédex
         </Link>
         <nav className="flex items-center gap-4">
-          <Link href="/">Tous</Link>
-          <Link href="/favoris" className="flex items-center">
-            Favoris
-            <CompteurFavoris />
-          </Link>
+          <Suspense fallback={<span>Tous</span>}>
+            <LienNav href="/">Tous</LienNav>
+          </Suspense>
+          <Suspense fallback={<span>Favoris</span>}>
+            <LienNav href="/favoris">
+              Favoris
+              <CompteurFavoris />
+            </LienNav>
+          </Suspense>
           <IndicateurSacoche />
         </nav>
       </div>
