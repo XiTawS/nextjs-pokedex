@@ -2,6 +2,8 @@
 
 Un Pokédex des 1 025 Pokémon construit avec Next.js 16, React 19, Tailwind CSS 4 et Zustand, à partir des données de la [PokéAPI](https://pokeapi.co).
 
+**En ligne : https://nextjs-pokedex-sepia.vercel.app** (déployé par Vercel à chaque fusion dans `main`, avec un aperçu pour chaque pull request).
+
 Projet réalisé en suivant le cours « Next.js Pokédex » (contenu dans [`knowledge/cours-nextjs-pokedex`](knowledge/cours-nextjs-pokedex/README.md)).
 
 ## Fonctionnalités
