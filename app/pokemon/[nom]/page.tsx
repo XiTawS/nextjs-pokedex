@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import BadgeType from "@/components/BadgeType";
 import BarresStats from "@/components/BarresStats";
 import BoutonFavori from "@/components/BoutonFavori";
+import BoutonSacoche from "@/components/BoutonSacoche";
 import GrillePokemons from "@/components/GrillePokemons";
 import {
   recupererEvolutions,
@@ -62,7 +63,10 @@ async function Fiche({ params }: Props) {
         <div className="mb-4 flex gap-2">
           {pokemon.types.map((type) => <BadgeType key={type} type={type} />)}
         </div>
-        <p className="mb-6">{pokemon.taille} m · {pokemon.poids} kg</p>
+        <p className="mb-4">{pokemon.taille} m · {pokemon.poids} kg</p>
+        <div className="mb-6">
+          <BoutonSacoche pokemon={pokemon} />
+        </div>
         <BarresStats stats={pokemon.stats} />
       </div>
       <section className="md:col-span-2">
