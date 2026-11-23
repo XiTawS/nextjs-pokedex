@@ -31,3 +31,21 @@ export async function recupererListe(limite = 24, decalage = 0): Promise<Pokemon
   );
   return page ? recupererPlusieurs(page.results.map((p) => p.name)) : [];
 }
+
+type Maillon = {
+  species: { name: string };
+  evolves_to: Maillon[];
+};
+
+function aplatir(maillon: Maillon): string[] {
+  return [maillon.species.name, ...maillon.evolves_to.flatMap(aplatir)];
+}
+
+export async function recupererEvolutions(id: number): Promise<string[]> {
+  "use cache";
+  cacheLife("days");
+  const espece = await appeler<{ evolution_chain: { url: string } }>(`/pokemon-species/${id}`);
+  if (!espece) return [];
+  const chaine = await appeler<{ chain: Maillon }>(espece.evolution_chain.url);
+  return chaine ? aplatir(chaine.chain) : [];
+}
