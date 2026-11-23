@@ -6,7 +6,7 @@ export default function GrillePokemons({ pokemons }: { pokemons: Pokemon[] }) {
     return <p>Aucun Pokémon à afficher.</p>;
   }
   return (
-    <ul>
+    <ul className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
       {pokemons.map((pokemon) => (
         <li key={pokemon.id}>
           <CartePokemon pokemon={pokemon} />
