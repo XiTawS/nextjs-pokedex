@@ -36,13 +36,13 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
           <div className="relative text-center">
             <Image
               src={pokemon.image}
-              alt={pokemon.nom}
+              alt={pokemon.nomAffiche}
               width={160}
               height={160}
               className="mx-auto drop-shadow-lg transition duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
             <h2 className="mb-2 mt-1 text-lg font-bold capitalize tracking-tight">
-              {pokemon.nom}
+              {pokemon.nomAffiche}
             </h2>
             <div className="flex flex-wrap justify-center gap-1">
               {pokemon.types.map((type) => (
@@ -53,7 +53,7 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
         </article>
       </Link>
       <div className="absolute left-2 top-2 z-10">
-        <BoutonFavori nom={pokemon.nom} />
+        <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
       </div>
     </div>
   );

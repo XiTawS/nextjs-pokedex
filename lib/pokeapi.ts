@@ -24,11 +24,49 @@ async function appeler<T>(adresse: string, essaisRestants = 2): Promise<T | null
   return reponse.json() as Promise<T>;
 }
 
-export async function recupererPokemon(nom: string): Promise<Pokemon | null> {
+const GRAPHQL = "https://graphql.pokeapi.co/v1beta2";
+const REQUETE_NOMS = `query {
+  pokemonspecies(order_by: { id: asc }) {
+    pokemons(where: { is_default: { _eq: true } }) { name }
+    pokemonspeciesnames(where: { language_id: { _eq: 5 } }) { name }
+  }
+}`;
+
+type EspecesGraphql = {
+  data: { pokemonspecies: { pokemons: { name: string }[]; pokemonspeciesnames: { name: string }[] }[] };
+};
+
+// Les 1 025 noms français en une seule requête GraphQL (l'API REST demanderait un appel par espèce).
+// Clé : nom de l'API (« charizard »), valeur : nom français (« Dracaufeu »).
+export async function recupererNomsFrancais(): Promise<Record<string, string>> {
   "use cache";
   cacheLife("days");
-  const brut = await appeler<PokemonApi>(`/pokemon/${encodeURIComponent(nom.toLowerCase())}`);
-  return brut ? versPokemon(brut) : null;
+  const reponse = await fetch(GRAPHQL, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({ query: REQUETE_NOMS }),
+  });
+  if (!reponse.ok) throw new Error(`L'API GraphQL de la PokéAPI a répondu ${reponse.status}`);
+  const { data } = (await reponse.json()) as EspecesGraphql;
+  return Object.fromEntries(
+    data.pokemonspecies.flatMap((espece) =>
+      espece.pokemons[0] && espece.pokemonspeciesnames[0]
+        ? [[espece.pokemons[0].name, espece.pokemonspeciesnames[0].name]]
+        : []
+    )
+  );
+}
+
+export async function recupererPokemon(nom: string): Promise<Pokemon | null> {
+  "use cache";
+  const [brut, nomsFrancais] = await Promise.all([
+    appeler<PokemonApi>(`/pokemon/${encodeURIComponent(nom.toLowerCase())}`),
+    recupererNomsFrancais().catch(() => null),
+  ]);
+  // Sans les noms français (GraphQL en panne), le résultat ne reste en cache que quelques minutes.
+  if (nomsFrancais) cacheLife("days");
+  else cacheLife("minutes");
+  return brut ? versPokemon(brut, nomsFrancais?.[brut.name]) : null;
 }
 
 export async function recupererPlusieurs(noms: string[]): Promise<Pokemon[]> {

@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const pokemon = await recupererPokemon(nom);
   if (!pokemon) return { title: "Pokémon introuvable" };
 
-  const titre = pokemon.nom.charAt(0).toUpperCase() + pokemon.nom.slice(1);
+  const titre = pokemon.nomAffiche;
   return {
     title: titre,
     description: `${titre} : types, statistiques et évolutions.`,

@@ -5,7 +5,8 @@ export type Statistique = {
 
 export type Pokemon = {
   id: number;
-  nom: string;
+  nom: string;          // nom de l'API, sert dans les adresses : « mr-mime »
+  nomAffiche: string;   // nom français officiel : « M. Mime »
   image: string;
   types: string[];
   taille: number;   // en mètres
