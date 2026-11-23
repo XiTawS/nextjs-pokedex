@@ -59,3 +59,15 @@ export async function recupererTousLesNoms(): Promise<string[]> {
   if (!page) throw new Error("La liste des Pokémon est introuvable");
   return page.results.map((p) => p.name);
 }
+
+export async function recupererNomsParType(type: string): Promise<string[]> {
+  "use cache";
+  cacheLife("days");
+  const [tous, donnees] = await Promise.all([
+    recupererTousLesNoms(),
+    appeler<{ pokemon: { pokemon: { name: string } }[] }>(`/type/${type}`),
+  ]);
+  if (!donnees) return [];
+  const duType = new Set(donnees.pokemon.map((p) => p.pokemon.name));
+  return tous.filter((nom) => duType.has(nom));
+}
