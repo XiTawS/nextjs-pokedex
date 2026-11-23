@@ -1,14 +1,38 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import BadgeType from "@/components/BadgeType";
 import BarresStats from "@/components/BarresStats";
 import GrillePokemons from "@/components/GrillePokemons";
-import { recupererEvolutions, recupererPlusieurs, recupererPokemon } from "@/lib/pokeapi";
+import {
+  recupererEvolutions,
+  recupererPlusieurs,
+  recupererPokemon,
+  recupererTousLesNoms,
+} from "@/lib/pokeapi";
 
 type Props = {
   params: Promise<{ nom: string }>;
 };
+
+export async function generateStaticParams() {
+  const noms = await recupererTousLesNoms();
+  return noms.slice(0, 151).map((nom) => ({ nom }));
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { nom } = await params;
+  const pokemon = await recupererPokemon(nom);
+  if (!pokemon) return { title: "Pokémon introuvable" };
+
+  const titre = pokemon.nom.charAt(0).toUpperCase() + pokemon.nom.slice(1);
+  return {
+    title: titre,
+    description: `${titre} : types, statistiques et évolutions.`,
+    openGraph: { images: [pokemon.image] },
+  };
+}
 
 export default function PageFiche({ params }: Props) {
   return (

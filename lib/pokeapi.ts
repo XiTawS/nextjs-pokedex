@@ -49,3 +49,13 @@ export async function recupererEvolutions(id: number): Promise<string[]> {
   const chaine = await appeler<{ chain: Maillon }>(espece.evolution_chain.url);
   return chaine ? aplatir(chaine.chain) : [];
 }
+
+export const TOTAL_POKEMONS = 1025;
+
+export async function recupererTousLesNoms(): Promise<string[]> {
+  "use cache";
+  cacheLife("days");
+  const page = await appeler<{ results: { name: string }[] }>(`/pokemon?limit=${TOTAL_POKEMONS}`);
+  if (!page) throw new Error("La liste des Pokémon est introuvable");
+  return page.results.map((p) => p.name);
+}
