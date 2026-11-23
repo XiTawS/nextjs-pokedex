@@ -4,7 +4,8 @@ import type { Pokemon } from "@/types/pokemon";
 
 export const TAILLE_SACOCHE = 6;
 
-export type Membre = Pick<Pokemon, "id" | "nom" | "image" | "types"> & { surnom: string };
+// nomAffiche manque sur les membres enregistrés avant l'ajout des noms français.
+export type Membre = Pick<Pokemon, "id" | "nom" | "image" | "types"> & { nomAffiche?: string; surnom: string };
 
 type EtatSacoche = {
   equipe: Membre[];
@@ -22,8 +23,8 @@ export const useSacoche = create<EtatSacoche>()(
         set((etat) => {
           const dejaPresent = etat.equipe.some((membre) => membre.id === pokemon.id);
           if (dejaPresent || etat.equipe.length >= TAILLE_SACOCHE) return etat;
-          const { id, nom, image, types } = pokemon;
-          return { equipe: [...etat.equipe, { id, nom, image, types, surnom: "" }] };
+          const { id, nom, nomAffiche, image, types } = pokemon;
+          return { equipe: [...etat.equipe, { id, nom, nomAffiche, image, types, surnom: "" }] };
         }),
       retirer: (id) =>
         set((etat) => ({ equipe: etat.equipe.filter((membre) => membre.id !== id) })),

@@ -4,7 +4,12 @@ import FiltreTypes from "@/components/FiltreTypes";
 import GrillePokemons from "@/components/GrillePokemons";
 import Pagination from "@/components/Pagination";
 import SqueletteGrille from "@/components/SqueletteGrille";
-import { recupererNomsParType, recupererPlusieurs, recupererTousLesNoms } from "@/lib/pokeapi";
+import {
+  recupererNomsFrancais,
+  recupererNomsParType,
+  recupererPlusieurs,
+  recupererTousLesNoms,
+} from "@/lib/pokeapi";
 import { estType } from "@/lib/types";
 
 type Parametres = { q?: string; type?: string; page?: string };
@@ -14,6 +19,11 @@ type Props = {
 };
 
 const PAR_PAGE = 24;
+
+// « Évoli » → « evoli » : la recherche ignore accents et majuscules.
+function normaliser(texte: string) {
+  return texte.normalize("NFD").replace(/\p{Diacritic}/gu, "").toLowerCase();
+}
 
 export default function Accueil({ searchParams }: Props) {
   return (
@@ -44,8 +54,12 @@ async function Resultats({ parametres }: { parametres: Parametres }) {
   const { q = "", type = "", page = "1" } = parametres;
 
   let noms = estType(type) ? await recupererNomsParType(type) : await recupererTousLesNoms();
-  const texte = q.trim().toLowerCase();
-  if (texte) noms = noms.filter((nom) => nom.includes(texte));
+  const texte = normaliser(q.trim());
+  if (texte) {
+    // Recherche sur le nom anglais de l'API et sur le nom français.
+    const francais: Record<string, string> = await recupererNomsFrancais().catch(() => ({}));
+    noms = noms.filter((nom) => nom.includes(texte) || normaliser(francais[nom] ?? "").includes(texte));
+  }
 
   const nombrePages = Math.max(1, Math.ceil(noms.length / PAR_PAGE));
   const pageCourante = Math.min(Math.max(1, Number(page) || 1), nombrePages);

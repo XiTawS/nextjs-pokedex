@@ -5,6 +5,7 @@ export const demo: Pokemon[] = [
   {
     id: 1,
     nom: "bulbasaur",
+    nomAffiche: "Bulbizarre",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
     types: ["grass", "poison"],
@@ -22,6 +23,7 @@ export const demo: Pokemon[] = [
   {
     id: 4,
     nom: "charmander",
+    nomAffiche: "Salamèche",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
     types: ["fire"],
@@ -39,6 +41,7 @@ export const demo: Pokemon[] = [
   {
     id: 7,
     nom: "squirtle",
+    nomAffiche: "Carapuce",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
     types: ["water"],
@@ -56,6 +59,7 @@ export const demo: Pokemon[] = [
   {
     id: 25,
     nom: "pikachu",
+    nomAffiche: "Pikachu",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
     types: ["electric"],
@@ -73,6 +77,7 @@ export const demo: Pokemon[] = [
   {
     id: 94,
     nom: "gengar",
+    nomAffiche: "Ectoplasma",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
     types: ["ghost", "poison"],
@@ -90,6 +95,7 @@ export const demo: Pokemon[] = [
   {
     id: 149,
     nom: "dragonite",
+    nomAffiche: "Dracolosse",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
     types: ["dragon", "flying"],
@@ -110,6 +116,7 @@ export const demoEvolutions: Pokemon[] = [
   {
     id: 4,
     nom: "charmander",
+    nomAffiche: "Salamèche",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
     types: ["fire"],
@@ -127,6 +134,7 @@ export const demoEvolutions: Pokemon[] = [
   {
     id: 5,
     nom: "charmeleon",
+    nomAffiche: "Reptincel",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
     types: ["fire"],
@@ -144,6 +152,7 @@ export const demoEvolutions: Pokemon[] = [
   {
     id: 6,
     nom: "charizard",
+    nomAffiche: "Dracaufeu",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
     types: ["fire", "flying"],
@@ -164,6 +173,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 931,
     nom: "squawkabilly-green-plumage",
+    nomAffiche: "Tapatoès",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/931.png",
     types: ["normal", "flying"],
@@ -181,6 +191,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 151,
     nom: "mew",
+    nomAffiche: "Mew",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
     types: ["psychic"],
@@ -198,6 +209,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 10034,
     nom: "charizard-mega-x",
+    nomAffiche: "Charizard Mega X",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10034.png",
     types: ["fire", "dragon"],
@@ -215,6 +227,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 925,
     nom: "maushold-family-of-four",
+    nomAffiche: "Famignol",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/925.png",
     types: ["normal"],
@@ -232,6 +245,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 250,
     nom: "ho-oh",
+    nomAffiche: "Ho-Oh",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png",
     types: ["fire", "flying"],
@@ -249,6 +263,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 982,
     nom: "dudunsparce-two-segment",
+    nomAffiche: "Deusolourdo",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/99999.png",
     types: ["normal"],
@@ -266,6 +281,7 @@ export const pireCas: Pokemon[] = [
   {
     id: 790,
     nom: "cosmoem",
+    nomAffiche: "Cosmovum",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/790.png",
     types: ["psychic"],
@@ -287,6 +303,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 133,
     nom: "eevee",
+    nomAffiche: "Évoli",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
     types: ["normal"],
@@ -304,6 +321,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 134,
     nom: "vaporeon",
+    nomAffiche: "Aquali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
     types: ["water"],
@@ -321,6 +339,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 135,
     nom: "jolteon",
+    nomAffiche: "Voltali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
     types: ["electric"],
@@ -338,6 +357,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 136,
     nom: "flareon",
+    nomAffiche: "Pyroli",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png",
     types: ["fire"],
@@ -355,6 +375,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 196,
     nom: "espeon",
+    nomAffiche: "Mentali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png",
     types: ["psychic"],
@@ -372,6 +393,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 197,
     nom: "umbreon",
+    nomAffiche: "Noctali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png",
     types: ["dark"],
@@ -389,6 +411,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 470,
     nom: "leafeon",
+    nomAffiche: "Phyllali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png",
     types: ["grass"],
@@ -406,6 +429,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 471,
     nom: "glaceon",
+    nomAffiche: "Givrali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png",
     types: ["ice"],
@@ -423,6 +447,7 @@ export const pireCasEvolutions: Pokemon[] = [
   {
     id: 700,
     nom: "sylveon",
+    nomAffiche: "Nymphali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png",
     types: ["fairy"],
@@ -444,6 +469,7 @@ export const unSeul: Pokemon[] = [
   {
     id: 128,
     nom: "tauros",
+    nomAffiche: "Tauros",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
     types: ["normal"],
