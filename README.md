@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pokédex
 
-## Getting Started
+Un Pokédex des 1 025 Pokémon construit avec Next.js 16, React 19, Tailwind CSS 4 et Zustand, à partir des données de la [PokéAPI](https://pokeapi.co).
 
-First, run the development server:
+Projet réalisé en suivant le cours « Next.js Pokédex » (contenu dans [`knowledge/cours-nextjs-pokedex`](knowledge/cours-nextjs-pokedex/README.md)).
+
+## Fonctionnalités
+
+- Grille paginée des 1 025 Pokémon, avec recherche par nom et filtre par type gardés dans l'adresse (`/?q=pika&type=electric&page=2`)
+- Fiche de chaque Pokémon : image, types, taille, poids, statistiques et chaîne d'évolution ; les 151 premières sont pré-générées
+- Favoris et sacoche du dresseur (six Pokémon, surnoms, types couverts), enregistrés dans le navigateur
+- Route d'API `/api/aleatoire` et bouton « Au hasard »
+- Squelettes de chargement, page d'erreur avec « Réessayer », page 404, thème sombre, raccourci `/` vers la recherche
+
+## Démarrer
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install      # installe aussi les hooks Git du projet
+npm run dev      # http://localhost:3000
+npm run lint
+npm run build && npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Organisation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Dossier | Contenu |
+| --- | --- |
+| `app/` | Pages, layouts, états (`loading`, `error`, `not-found`) et route d'API |
+| `components/` | Composants d'interface ; ceux marqués `"use client"` sont interactifs |
+| `lib/` | Accès aux données : `pokeapi.ts` (serveur, en cache), `pokeapi-client.ts` (navigateur), conversion et types de Pokémon |
+| `stores/` | Stores Zustand : favoris et sacoche |
+| `hooks/` | Hooks personnalisés |
+| `types/` | Types TypeScript de l'API et de l'application |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contribuer
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `main` est protégée : chaque changement passe par une branche (`feat/…`, `fix/…`) et une pull request.
+- Les messages de commit suivent le format conventionnel `type(portée): description` ; un hook Git le vérifie.
+- La CI (« Checks ») lance le lint et le build sur chaque pull request ; elle doit être verte pour fusionner.
