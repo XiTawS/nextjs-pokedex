@@ -2,8 +2,21 @@ import { cacheLife } from "next/cache";
 import type { Pokemon, PokemonApi } from "@/types/pokemon";
 import { API, versPokemon } from "./conversion";
 
-async function appeler<T>(adresse: string): Promise<T | null> {
-  const reponse = await fetch(adresse.startsWith("http") ? adresse : `${API}${adresse}`);
+// Le build pré-génère 151 fiches en parallèle : la PokéAPI refuse parfois une connexion
+// ou répond 429/503. On réessaie deux fois avant d'abandonner.
+async function appeler<T>(adresse: string, essaisRestants = 2): Promise<T | null> {
+  const reessayer = async () => {
+    await new Promise((fin) => setTimeout(fin, 1000));
+    return appeler<T>(adresse, essaisRestants - 1);
+  };
+  let reponse: Response;
+  try {
+    reponse = await fetch(adresse.startsWith("http") ? adresse : `${API}${adresse}`);
+  } catch (erreur) {
+    if (essaisRestants > 0) return reessayer();
+    throw erreur;
+  }
+  if ((reponse.status === 429 || reponse.status === 503) && essaisRestants > 0) return reessayer();
   if (reponse.status === 404) return null;
   if (!reponse.ok) {
     throw new Error(`La PokéAPI a répondu ${reponse.status} pour ${adresse}`);
