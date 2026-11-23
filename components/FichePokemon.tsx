@@ -17,7 +17,6 @@ import { Apparition, Nombre, Remplissage } from "./Anime";
 import BarresStats from "./BarresStats";
 import BoutonCapture from "./BoutonCapture";
 import BoutonFavori from "./BoutonFavori";
-import GrillePokemons from "./GrillePokemons";
 import IconeType from "./IconeType";
 import ImagePokemon from "./ImagePokemon";
 
@@ -212,20 +211,27 @@ export default function FichePokemon({
             </h2>
             <BarresStats stats={pokemon.stats} />
           </section>
+
+          {/* Dans la colonne d'informations : sur ordinateur, tout tient à droite du panneau, sans défiler. */}
+          {evolutions.length > 1 && (
+            <section aria-labelledby="titre-evolutions" className="grid gap-3">
+              <h2 id="titre-evolutions" className={PETIT_TITRE}>
+                Évolutions
+              </h2>
+              <ol className="grid grid-cols-[repeat(auto-fit,minmax(6.5rem,1fr))] gap-3">
+                {evolutions.map((evolution) => (
+                  <li key={evolution.id}>
+                    <MiniEvolution
+                      evolution={evolution}
+                      estActuel={evolution.id === pokemon.id}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
         </div>
       </div>
-
-      {evolutions.length > 1 && (
-        <section
-          aria-labelledby="titre-evolutions"
-          className="mt-10 grid gap-3 px-1"
-        >
-          <h2 id="titre-evolutions" className={PETIT_TITRE}>
-            Évolutions
-          </h2>
-          <GrillePokemons pokemons={evolutions} />
-        </section>
-      )}
     </article>
   );
 }
@@ -278,5 +284,38 @@ function Evolution({
       </p>
       <p className={PETIT_TITRE}>Évolution</p>
     </div>
+  );
+}
+
+function MiniEvolution({
+  evolution,
+  estActuel,
+}: {
+  evolution: Pokemon;
+  estActuel: boolean;
+}) {
+  const teinte = { "--vive": teinteVive(evolution.types[0]) } as CSSProperties;
+  return (
+    <Link
+      href={`/pokemon/${evolution.nom}`}
+      aria-current={estActuel ? "page" : undefined}
+      style={teinte}
+      className={`flex h-full flex-col items-center gap-1 rounded-2xl bg-white p-2 text-center text-sm font-medium shadow-sm transition hover:-translate-y-0.5 motion-reduce:transition-none dark:bg-gray-900 ${
+        estActuel
+          ? "ring-2 ring-(--teinte)"
+          : "ring-1 ring-black/5 hover:ring-black/20 dark:ring-white/10"
+      }`}
+    >
+      <span className="grid size-16 place-items-center rounded-full bg-(--vive)/30">
+        <ImagePokemon
+          sources={[evolution.image]}
+          alt=""
+          width={96}
+          height={96}
+          className="size-14 object-contain"
+        />
+      </span>
+      <span className="wrap-anywhere">{evolution.nomAffiche}</span>
+    </Link>
   );
 }
