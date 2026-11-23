@@ -1,0 +1,4 @@
+/* Ordre des couches CSS : la remise à zéro d'Astryx tout en bas, les utilitaires Tailwind tout en haut.
+   Fichier à part, importé en premier par app/layout.tsx : Tailwind retire cette ligne
+   quand elle est dans globals.css, et l'ordre s'inverse (voir `npx astryx docs styling-libraries/tailwind`). */
+@layer reset, theme, base, astryx-base, astryx-theme, components, utilities;
