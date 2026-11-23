@@ -48,175 +48,177 @@ export default function FichePokemon({
   const femelles = details.pourcentageFemelles;
 
   return (
-    <article
-      style={teinte}
-      className="mx-auto max-w-xl lg:grid lg:max-w-none lg:grid-cols-[5fr_6fr] lg:items-start lg:gap-x-12 lg:gap-y-10"
-    >
-      {/* En-tête à la couleur du type principal, avec son icône en filigrane */}
-      {/* Sur grand écran, l'en-tête devient un panneau à gauche, qui reste visible pendant le défilement. */}
-      <section className="relative -mx-4 -mt-6 h-80 sm:mx-0 sm:mt-0 lg:sticky lg:top-6 lg:h-[34rem]">
-        <div
-          aria-hidden
-          className="absolute inset-0 overflow-hidden rounded-b-[50%_18%] bg-linear-to-br from-(--vive) to-(--vive)/75 sm:rounded-t-3xl lg:rounded-3xl"
-        >
-          <IconeType
-            type={pokemon.types[0]}
-            className="absolute left-1/2 top-8 size-52 -translate-x-1/2 text-white/30 lg:top-1/2 lg:size-96 lg:-translate-y-1/2"
-          />
-        </div>
-
-        <div className="relative z-20 flex items-center justify-between px-4 pt-4">
-          <Link
-            href="/"
-            aria-label="Retour au Pokédex"
-            className="grid size-10 place-items-center rounded-full bg-white text-gray-900 shadow-md shadow-black/10 transition hover:scale-105 active:scale-95"
+    <article style={teinte} className="mx-auto max-w-xl lg:max-w-none">
+      {/* Sur grand écran : panneau coloré à gauche, informations à droite. Ce bloc borne le panneau
+          collant : il cesse de suivre le défilement à la fin des informations, avant les évolutions. */}
+      <div className="lg:grid lg:grid-cols-[5fr_6fr] lg:items-start lg:gap-12">
+        {/* En-tête à la couleur du type principal, avec son icône en filigrane.
+          top-20 : sous l'en-tête collant du site (≈ 57 px) plus une marge. */}
+        <section className="relative -mx-4 -mt-6 h-80 sm:mx-0 sm:mt-0 lg:sticky lg:top-20 lg:h-[34rem]">
+          <div
+            aria-hidden
+            className="absolute inset-0 overflow-hidden rounded-b-[50%_18%] bg-linear-to-br from-(--vive) to-(--vive)/75 sm:rounded-t-3xl lg:rounded-3xl"
           >
-            <ArrowLeft className="size-6" />
-          </Link>
-          <BoutonCapture pokemon={pokemon} />
-        </div>
-
-        {precedent && (
-          <Link
-            href={`/pokemon/${precedent}`}
-            aria-label="Pokémon précédent"
-            className={`${BOUTON_ROND} left-3`}
-          >
-            <ChevronLeft className="size-6" />
-          </Link>
-        )}
-        {suivant && (
-          <Link
-            href={`/pokemon/${suivant}`}
-            aria-label="Pokémon suivant"
-            className={`${BOUTON_ROND} right-3`}
-          >
-            <ChevronRight className="size-6" />
-          </Link>
-        )}
-
-        <Apparition
-          cle={pokemon.id}
-          className="absolute inset-x-0 -bottom-6 z-10 flex justify-center lg:inset-y-0 lg:items-center"
-        >
-          {/* Le GIF de Showdown est petit (≈ 100 px) : agrandi en gardant des pixels nets. */}
-          <ImagePokemon
-            sources={[pokemon.sprite, pokemon.image]}
-            alt={pokemon.nomAffiche}
-            width={400}
-            height={400}
-            loading="eager"
-            className="h-52 w-auto object-contain drop-shadow-xl [image-rendering:pixelated] lg:h-80"
-          />
-        </Apparition>
-      </section>
-
-      <div className="grid gap-6 px-1 pt-12 lg:pt-4">
-        <header className="flex items-start justify-between gap-4">
-          <div className="min-w-0">
-            <div className="flex items-center gap-1">
-              <h1 className="text-4xl font-semibold tracking-tight wrap-anywhere">
-                {pokemon.nomAffiche}
-              </h1>
-              <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
-            </div>
-            <p className="font-mono text-gray-500 dark:text-gray-400">
-              #{String(pokemon.id).padStart(3, "0")}
-            </p>
+            <IconeType
+              type={pokemon.types[0]}
+              className="absolute left-1/2 top-8 size-52 -translate-x-1/2 text-white/30 lg:top-1/2 lg:size-96 lg:-translate-y-1/2"
+            />
           </div>
-          <Evolution details={details} evolue={evolutions.length > 1} />
-        </header>
 
-        <ul className="flex flex-wrap gap-3">
-          {pokemon.types.map((type) => {
-            const style = TYPES[type] ?? {
-              libelle: type,
-              classe: "bg-gray-500",
-            };
-            return (
-              <li
-                key={type}
-                className="flex items-center gap-2 rounded-full bg-white py-1 pl-1 pr-4 text-sm font-medium shadow-md shadow-black/5 ring-1 ring-black/5 dark:bg-gray-900 dark:ring-white/10"
-              >
-                <span
-                  className={`grid size-7 place-items-center rounded-full text-white ${style.classe}`}
-                >
-                  <IconeType type={type} className="size-4" />
-                </span>
-                {style.libelle}
-              </li>
-            );
-          })}
-        </ul>
+          <div className="relative z-20 flex items-center justify-between px-4 pt-4">
+            <Link
+              href="/"
+              aria-label="Retour au Pokédex"
+              className="grid size-10 place-items-center rounded-full bg-white text-gray-900 shadow-md shadow-black/10 transition hover:scale-105 active:scale-95"
+            >
+              <ArrowLeft className="size-6" />
+            </Link>
+            <BoutonCapture pokemon={pokemon} />
+          </div>
 
-        {details.description && (
-          <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
-            {details.description}
-          </p>
-        )}
-
-        <dl className="grid grid-cols-3 gap-4 border-t border-black/10 pt-6 dark:border-white/10">
-          <Mesure icone={<Weight className="size-3.5" />} titre="Poids">
-            <Nombre valeur={pokemon.poids} /> kg
-          </Mesure>
-          <Mesure icone={<Ruler className="size-3.5" />} titre="Taille">
-            <Nombre valeur={pokemon.taille} /> m
-          </Mesure>
-          <Mesure icone={<Sparkles className="size-3.5" />} titre="Talent">
-            {details.talent ?? "—"}
-          </Mesure>
-        </dl>
-
-        <section aria-labelledby="titre-genre">
-          <h2 id="titre-genre" className={`${PETIT_TITRE} text-center`}>
-            Genre
-          </h2>
-          {femelles === null ? (
-            <>
-              <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
-              <p className="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
-                Asexué
-              </p>
-            </>
-          ) : (
-            <>
-              <div
-                role="img"
-                aria-label={`${formaterNombre(100 - femelles)} % de mâles, ${formaterNombre(femelles)} % de femelles`}
-                className="mt-2 flex h-2 overflow-hidden rounded-full bg-pink-400"
-              >
-                <Remplissage
-                  pourcentage={100 - femelles}
-                  className="h-full bg-blue-700"
-                />
-              </div>
-              <div
-                aria-hidden
-                className="mt-1 flex justify-between text-sm text-gray-600 dark:text-gray-300"
-              >
-                <span className="flex items-center gap-1">
-                  <Mars className="size-4" /> {formaterNombre(100 - femelles)} %
-                </span>
-                <span className="flex items-center gap-1">
-                  <Venus className="size-4" /> {formaterNombre(femelles)} %
-                </span>
-              </div>
-            </>
+          {precedent && (
+            <Link
+              href={`/pokemon/${precedent}`}
+              aria-label="Pokémon précédent"
+              className={`${BOUTON_ROND} left-3`}
+            >
+              <ChevronLeft className="size-6" />
+            </Link>
           )}
+          {suivant && (
+            <Link
+              href={`/pokemon/${suivant}`}
+              aria-label="Pokémon suivant"
+              className={`${BOUTON_ROND} right-3`}
+            >
+              <ChevronRight className="size-6" />
+            </Link>
+          )}
+
+          <Apparition
+            cle={pokemon.id}
+            className="absolute inset-x-0 -bottom-6 z-10 flex justify-center lg:inset-y-0 lg:items-center"
+          >
+            {/* Le GIF de Showdown est petit (≈ 100 px) : agrandi en gardant des pixels nets. */}
+            <ImagePokemon
+              sources={[pokemon.sprite, pokemon.image]}
+              alt={pokemon.nomAffiche}
+              width={400}
+              height={400}
+              loading="eager"
+              className="h-52 w-auto object-contain drop-shadow-xl [image-rendering:pixelated] lg:h-80"
+            />
+          </Apparition>
         </section>
 
-        <section aria-labelledby="titre-stats" className="grid gap-3">
-          <h2 id="titre-stats" className={PETIT_TITRE}>
-            Statistiques
-          </h2>
-          <BarresStats stats={pokemon.stats} />
-        </section>
+        <div className="grid gap-6 px-1 pt-12 lg:pt-4">
+          <header className="flex items-start justify-between gap-4">
+            <div className="min-w-0">
+              <div className="flex items-center gap-1">
+                <h1 className="text-4xl font-semibold tracking-tight wrap-anywhere">
+                  {pokemon.nomAffiche}
+                </h1>
+                <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
+              </div>
+              <p className="font-mono text-gray-500 dark:text-gray-400">
+                #{String(pokemon.id).padStart(3, "0")}
+              </p>
+            </div>
+            <Evolution details={details} evolue={evolutions.length > 1} />
+          </header>
+
+          <ul className="flex flex-wrap gap-3">
+            {pokemon.types.map((type) => {
+              const style = TYPES[type] ?? {
+                libelle: type,
+                classe: "bg-gray-500",
+              };
+              return (
+                <li
+                  key={type}
+                  className="flex items-center gap-2 rounded-full bg-white py-1 pl-1 pr-4 text-sm font-medium shadow-md shadow-black/5 ring-1 ring-black/5 dark:bg-gray-900 dark:ring-white/10"
+                >
+                  <span
+                    className={`grid size-7 place-items-center rounded-full text-white ${style.classe}`}
+                  >
+                    <IconeType type={type} className="size-4" />
+                  </span>
+                  {style.libelle}
+                </li>
+              );
+            })}
+          </ul>
+
+          {details.description && (
+            <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+              {details.description}
+            </p>
+          )}
+
+          <dl className="grid grid-cols-3 gap-4 border-t border-black/10 pt-6 dark:border-white/10">
+            <Mesure icone={<Weight className="size-3.5" />} titre="Poids">
+              <Nombre valeur={pokemon.poids} /> kg
+            </Mesure>
+            <Mesure icone={<Ruler className="size-3.5" />} titre="Taille">
+              <Nombre valeur={pokemon.taille} /> m
+            </Mesure>
+            <Mesure icone={<Sparkles className="size-3.5" />} titre="Talent">
+              {details.talent ?? "—"}
+            </Mesure>
+          </dl>
+
+          <section aria-labelledby="titre-genre">
+            <h2 id="titre-genre" className={`${PETIT_TITRE} text-center`}>
+              Genre
+            </h2>
+            {femelles === null ? (
+              <>
+                <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
+                <p className="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">
+                  Asexué
+                </p>
+              </>
+            ) : (
+              <>
+                <div
+                  role="img"
+                  aria-label={`${formaterNombre(100 - femelles)} % de mâles, ${formaterNombre(femelles)} % de femelles`}
+                  className="mt-2 flex h-2 overflow-hidden rounded-full bg-pink-400"
+                >
+                  <Remplissage
+                    pourcentage={100 - femelles}
+                    className="h-full bg-blue-700"
+                  />
+                </div>
+                <div
+                  aria-hidden
+                  className="mt-1 flex justify-between text-sm text-gray-600 dark:text-gray-300"
+                >
+                  <span className="flex items-center gap-1">
+                    <Mars className="size-4" /> {formaterNombre(100 - femelles)}{" "}
+                    %
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Venus className="size-4" /> {formaterNombre(femelles)} %
+                  </span>
+                </div>
+              </>
+            )}
+          </section>
+
+          <section aria-labelledby="titre-stats" className="grid gap-3">
+            <h2 id="titre-stats" className={PETIT_TITRE}>
+              Statistiques
+            </h2>
+            <BarresStats stats={pokemon.stats} />
+          </section>
+        </div>
       </div>
 
       {evolutions.length > 1 && (
         <section
           aria-labelledby="titre-evolutions"
-          className="mt-6 grid gap-3 px-1 lg:col-span-2 lg:mt-0"
+          className="mt-10 grid gap-3 px-1"
         >
           <h2 id="titre-evolutions" className={PETIT_TITRE}>
             Évolutions
