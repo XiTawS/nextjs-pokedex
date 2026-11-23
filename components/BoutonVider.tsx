@@ -15,7 +15,7 @@ export default function BoutonVider() {
         setAConfirmer(!aConfirmer);
       }}
       onBlur={() => setAConfirmer(false)}
-      className="rounded-full border px-4 py-2 text-sm font-semibold"
+      className="rounded-full bg-white px-4 py-2 text-sm font-semibold shadow-sm ring-1 ring-black/10 transition hover:ring-pokedex hover:text-pokedex dark:bg-gray-900 dark:ring-white/15"
     >
       {aConfirmer ? "Confirmer ?" : "Vider la sacoche"}
     </button>
