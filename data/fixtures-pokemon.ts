@@ -1,5 +1,5 @@
 // Jeux de données pour /dev/pire-cas (break-ui). Valeurs réelles de la PokéAPI, sauf mention.
-import type { Pokemon } from "@/types/pokemon";
+import type { DetailsPokemon, Pokemon } from "@/types/pokemon";
 
 export const demo: Pokemon[] = [
   {
@@ -536,3 +536,38 @@ export const unSeul: Pokemon[] = [
     ],
   },
 ];
+
+// Détails de fiche (valeurs réelles, sauf le pire cas)
+export const detailsDemo: DetailsPokemon = {
+  description: "La flamme de sa queue symbolise sa vitalité. Elle est intense quand il est en pleine forme.",
+  talent: "Brasier",
+  pourcentageFemelles: 12.5,
+  evolueDUneAutreEspece: false,
+  niveauEvolution: null,
+};
+
+// Pire cas : texte long, talent au nom long, évolution par un moyen autre que le niveau.
+export const detailsPireCas: DetailsPokemon = {
+  description:
+    "Il imite la voix des autres Pokémon et des humains pour défendre son territoire. Les individus au plumage vert sont les plus agressifs de tous, et on raconte qu’ils n’hésitent pas à s’en prendre aux Dresseurs qui s’approchent trop de leur nid.",
+  talent: "Querelleur Intimidant",
+  pourcentageFemelles: 50,
+  evolueDUneAutreEspece: true,
+  niveauEvolution: null,
+};
+
+export const detailsAsexue: DetailsPokemon = {
+  description: "Il ne bouge pas du tout. Il semble attendre que son enveloppe se craquelle.",
+  talent: "Fermeté",
+  pourcentageFemelles: null,
+  evolueDUneAutreEspece: true,
+  niveauEvolution: 43,
+};
+
+export const detailsUnSeul: DetailsPokemon = {
+  description: "Dès qu’il choisit un adversaire, il fonce droit sur lui en fouettant son corps de ses trois queues.",
+  talent: "Intimidation",
+  pourcentageFemelles: 0,
+  evolueDUneAutreEspece: false,
+  niveauEvolution: null,
+};

@@ -1,62 +1,209 @@
+import { ArrowLeft, ChevronLeft, ChevronRight, Mars, Ruler, Sparkles, Venus, Weight } from "lucide-react";
+import Link from "next/link";
+import type { CSSProperties, ReactNode } from "react";
 import { formaterNombre } from "@/lib/conversion";
-import type { Pokemon } from "@/types/pokemon";
-import BadgeType from "./BadgeType";
+import { TYPES, teinteType } from "@/lib/types";
+import type { DetailsPokemon, Pokemon } from "@/types/pokemon";
+import { Apparition, Nombre, Remplissage } from "./Anime";
 import BarresStats from "./BarresStats";
+import BoutonCapture from "./BoutonCapture";
 import BoutonFavori from "./BoutonFavori";
-import BoutonSacoche from "./BoutonSacoche";
 import GrillePokemons from "./GrillePokemons";
+import IconeType from "./IconeType";
 import ImagePokemon from "./ImagePokemon";
 
-export default function FichePokemon({
-  pokemon,
-  evolutions,
-}: {
+type Props = {
   pokemon: Pokemon;
   evolutions: Pokemon[];
-}) {
+  details: DetailsPokemon;
+  precedent: string | null; // nom du Pokémon précédent dans le Pokédex
+  suivant: string | null;
+};
+
+const PETIT_TITRE = "text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400";
+const BOUTON_ROND =
+  "absolute top-1/2 z-20 grid size-11 -translate-y-1/2 place-items-center rounded-full bg-white text-gray-900 shadow-lg shadow-black/10 transition hover:scale-105 active:scale-95 motion-reduce:transition-none";
+
+export default function FichePokemon({ pokemon, evolutions, details, precedent, suivant }: Props) {
+  const teinte = { "--teinte": teinteType(pokemon.types[0]) } as CSSProperties;
+  const femelles = details.pourcentageFemelles;
+
   return (
-    <article className="grid gap-8 md:grid-cols-2">
-      {/* Le GIF de Showdown est petit (≈ 100 px) : agrandi en gardant des pixels nets. */}
-      <ImagePokemon
-        sources={[pokemon.sprite, pokemon.image]}
-        alt={pokemon.nomAffiche}
-        width={400}
-        height={400}
-        loading="eager"
-        className="mx-auto h-72 w-auto object-contain [image-rendering:pixelated]"
-      />
-      <div>
-        <p className="font-mono text-gray-500">
-          #{String(pokemon.id).padStart(3, "0")}
-        </p>
-        <h1 className="mb-2 text-4xl font-bold wrap-anywhere">
-          {pokemon.nomAffiche}
-        </h1>
-        <div className="mb-4 flex gap-2">
-          {pokemon.types.map((type) => (
-            <BadgeType key={type} type={type} />
-          ))}
+    <article style={teinte} className="mx-auto max-w-xl">
+      {/* En-tête à la couleur du type principal, avec son icône en filigrane */}
+      <section className="relative -mx-4 -mt-6 h-80 sm:mx-0 sm:mt-0">
+        <div
+          aria-hidden
+          className="absolute inset-0 overflow-hidden rounded-b-[50%_18%] bg-linear-to-br from-(--teinte) to-(--teinte)/70 sm:rounded-t-3xl"
+        >
+          <IconeType
+            type={pokemon.types[0]}
+            className="absolute left-1/2 top-8 size-52 -translate-x-1/2 text-white/25"
+          />
         </div>
-        <p className="mb-4">
-          {formaterNombre(pokemon.taille)} m · {formaterNombre(pokemon.poids)}{" "}
-          kg
-        </p>
-        <div className="mb-6 flex items-center gap-3">
-          <BoutonSacoche pokemon={pokemon} />
-          <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
+
+        <div className="relative z-20 flex items-center justify-between px-4 pt-4">
+          <Link
+            href="/"
+            aria-label="Retour au Pokédex"
+            className="grid size-10 place-items-center rounded-full text-white transition hover:bg-white/20"
+          >
+            <ArrowLeft className="size-6" />
+          </Link>
+          <BoutonCapture pokemon={pokemon} />
         </div>
-        <BarresStats stats={pokemon.stats} />
-      </div>
-      {evolutions.length > 0 && (
-        <section className="md:col-span-2">
-          <h2 className="mb-4 text-2xl font-bold">Évolutions</h2>
-          {evolutions.length === 1 ? (
-            <p className="text-gray-500">{pokemon.nomAffiche} n’évolue pas.</p>
+
+        {precedent && (
+          <Link href={`/pokemon/${precedent}`} aria-label="Pokémon précédent" className={`${BOUTON_ROND} left-3`}>
+            <ChevronLeft className="size-6" />
+          </Link>
+        )}
+        {suivant && (
+          <Link href={`/pokemon/${suivant}`} aria-label="Pokémon suivant" className={`${BOUTON_ROND} right-3`}>
+            <ChevronRight className="size-6" />
+          </Link>
+        )}
+
+        <Apparition cle={pokemon.id} className="absolute inset-x-0 -bottom-6 z-10 flex justify-center">
+          {/* Le GIF de Showdown est petit (≈ 100 px) : agrandi en gardant des pixels nets. */}
+          <ImagePokemon
+            sources={[pokemon.sprite, pokemon.image]}
+            alt={pokemon.nomAffiche}
+            width={400}
+            height={400}
+            loading="eager"
+            className="h-52 w-auto object-contain drop-shadow-xl [image-rendering:pixelated]"
+          />
+        </Apparition>
+      </section>
+
+      <div className="grid gap-6 px-1 pt-12">
+        <header className="flex items-start justify-between gap-4">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1">
+              <h1 className="text-4xl font-semibold tracking-tight wrap-anywhere">{pokemon.nomAffiche}</h1>
+              <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
+            </div>
+            <p className="font-mono text-gray-500 dark:text-gray-400">#{String(pokemon.id).padStart(3, "0")}</p>
+          </div>
+          <Evolution details={details} evolue={evolutions.length > 1} />
+        </header>
+
+        <ul className="flex flex-wrap gap-3">
+          {pokemon.types.map((type) => {
+            const style = TYPES[type] ?? { libelle: type, classe: "bg-gray-500" };
+            return (
+              <li
+                key={type}
+                className="flex items-center gap-2 rounded-full bg-white py-1 pl-1 pr-4 text-sm font-medium shadow-md shadow-black/5 ring-1 ring-black/5 dark:bg-gray-900 dark:ring-white/10"
+              >
+                <span className={`grid size-7 place-items-center rounded-full text-white ${style.classe}`}>
+                  <IconeType type={type} className="size-4" />
+                </span>
+                {style.libelle}
+              </li>
+            );
+          })}
+        </ul>
+
+        {details.description && (
+          <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{details.description}</p>
+        )}
+
+        <dl className="grid grid-cols-3 gap-4 border-t border-black/10 pt-6 dark:border-white/10">
+          <Mesure icone={<Weight className="size-3.5" />} titre="Poids">
+            <Nombre valeur={pokemon.poids} /> kg
+          </Mesure>
+          <Mesure icone={<Ruler className="size-3.5" />} titre="Taille">
+            <Nombre valeur={pokemon.taille} /> m
+          </Mesure>
+          <Mesure icone={<Sparkles className="size-3.5" />} titre="Talent">
+            {details.talent ?? "—"}
+          </Mesure>
+        </dl>
+
+        <section aria-labelledby="titre-genre">
+          <h2 id="titre-genre" className={`${PETIT_TITRE} text-center`}>
+            Genre
+          </h2>
+          {femelles === null ? (
+            <>
+              <div className="mt-2 h-2 rounded-full bg-gray-200 dark:bg-gray-700" />
+              <p className="mt-1 text-center text-sm text-gray-500 dark:text-gray-400">Asexué</p>
+            </>
           ) : (
-            <GrillePokemons pokemons={evolutions} />
+            <>
+              <div
+                role="img"
+                aria-label={`${formaterNombre(100 - femelles)} % de mâles, ${formaterNombre(femelles)} % de femelles`}
+                className="mt-2 flex h-2 overflow-hidden rounded-full bg-pink-400"
+              >
+                <Remplissage pourcentage={100 - femelles} className="h-full bg-blue-700" />
+              </div>
+              <div aria-hidden className="mt-1 flex justify-between text-sm text-gray-600 dark:text-gray-300">
+                <span className="flex items-center gap-1">
+                  <Mars className="size-4" /> {formaterNombre(100 - femelles)} %
+                </span>
+                <span className="flex items-center gap-1">
+                  <Venus className="size-4" /> {formaterNombre(femelles)} %
+                </span>
+              </div>
+            </>
           )}
         </section>
-      )}
+
+        <section aria-labelledby="titre-stats" className="grid gap-3">
+          <h2 id="titre-stats" className={PETIT_TITRE}>
+            Statistiques
+          </h2>
+          <BarresStats stats={pokemon.stats} />
+        </section>
+
+        {evolutions.length > 1 && (
+          <section aria-labelledby="titre-evolutions" className="grid gap-3">
+            <h2 id="titre-evolutions" className={PETIT_TITRE}>
+              Évolutions
+            </h2>
+            <GrillePokemons pokemons={evolutions} />
+          </section>
+        )}
+      </div>
     </article>
+  );
+}
+
+function Mesure({ icone, titre, children }: { icone: ReactNode; titre: string; children: ReactNode }) {
+  return (
+    <div className="min-w-0">
+      <dt className={`flex items-center gap-1 ${PETIT_TITRE}`}>
+        {icone} {titre}
+      </dt>
+      <dd className="mt-1 text-xl font-medium wrap-anywhere">{children}</dd>
+    </div>
+  );
+}
+
+// À droite du nom : niveau d'évolution, ou ce qui en tient lieu.
+function Evolution({ details, evolue }: { details: DetailsPokemon; evolue: boolean }) {
+  const etiquette = (lignes: [string, string]) => (
+    <p className={`shrink-0 text-right leading-tight ${PETIT_TITRE}`}>
+      {lignes[0]}
+      <br />
+      {lignes[1]}
+    </p>
+  );
+  if (!evolue) return etiquette(["N’évolue", "pas"]);
+  if (!details.evolueDUneAutreEspece) return etiquette(["Forme", "de base"]);
+  if (details.niveauEvolution === null) return etiquette(["Évolution", "spéciale"]);
+  return (
+    <div className="shrink-0 text-right">
+      <p className="leading-none">
+        <span className="text-sm text-gray-500 dark:text-gray-400">niv. </span>
+        <span className="text-4xl font-semibold">
+          <Nombre valeur={details.niveauEvolution} />
+        </span>
+      </p>
+      <p className={PETIT_TITRE}>Évolution</p>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import FichePokemon from "@/components/FichePokemon";
 import {
+  recupererDetails,
   recupererEvolutions,
   recupererPlusieurs,
   recupererPokemon,
@@ -44,7 +45,23 @@ async function Fiche({ params }: Props) {
   const pokemon = await recupererPokemon(nom);
   if (!pokemon) notFound();
 
-  const evolutions = await recupererPlusieurs(await recupererEvolutions(pokemon.id));
+  const [evolutions, details, tous] = await Promise.all([
+    recupererEvolutions(pokemon.id).then(recupererPlusieurs),
+    recupererDetails(pokemon.id),
+    recupererTousLesNoms(),
+  ]);
+  // Voisins dans l'ordre du Pokédex (les formes, n° 10001 et plus, n'en ont pas).
+  const rang = tous.indexOf(pokemon.nom);
+  const precedent = rang > 0 ? tous[rang - 1] : null;
+  const suivant = rang >= 0 && rang < tous.length - 1 ? tous[rang + 1] : null;
 
-  return <FichePokemon pokemon={pokemon} evolutions={evolutions} />;
+  return (
+    <FichePokemon
+      pokemon={pokemon}
+      evolutions={evolutions}
+      details={details}
+      precedent={precedent}
+      suivant={suivant}
+    />
+  );
 }
