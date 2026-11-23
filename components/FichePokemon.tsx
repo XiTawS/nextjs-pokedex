@@ -13,7 +13,7 @@ import type { CSSProperties, ReactNode } from "react";
 import { formaterNombre } from "@/lib/conversion";
 import { TYPES, teinteType, teinteVive } from "@/lib/types";
 import type { DetailsPokemon, Pokemon } from "@/types/pokemon";
-import { Apparition, Nombre, Remplissage } from "./Anime";
+import { Nombre, Remplissage } from "./Anime";
 import BarresStats from "./BarresStats";
 import BoutonCapture from "./BoutonCapture";
 import BoutonFavori from "./BoutonFavori";
@@ -94,9 +94,11 @@ export default function FichePokemon({
             </Link>
           )}
 
-          <Apparition
-            cle={pokemon.id}
-            className="absolute inset-x-0 -bottom-6 z-10 flex justify-center lg:inset-y-0 lg:items-center"
+          {/* Animation CSS (pas JavaScript) : l'image, plus grand élément de la page, s'affiche sans attendre
+              l'hydratation. La clé rejoue l'animation quand on passe au Pokémon suivant. */}
+          <div
+            key={pokemon.id}
+            className="absolute inset-x-0 -bottom-6 z-10 flex animate-apparition justify-center motion-reduce:animate-none lg:inset-y-0 lg:items-center"
           >
             {/* Le GIF de Showdown est petit (≈ 100 px) : agrandi en gardant des pixels nets. */}
             <ImagePokemon
@@ -107,7 +109,7 @@ export default function FichePokemon({
               loading="eager"
               className="h-52 w-auto object-contain drop-shadow-xl [image-rendering:pixelated] lg:h-80"
             />
-          </Apparition>
+          </div>
         </section>
 
         <div className="grid gap-6 px-1 pt-12 lg:pt-4">
