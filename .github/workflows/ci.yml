@@ -6,7 +6,8 @@ on:
   pull_request:
 
 jobs:
-  qualite:
+  validate-title:
+    name: Validate title
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
