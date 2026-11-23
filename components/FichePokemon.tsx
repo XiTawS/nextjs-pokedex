@@ -1,3 +1,4 @@
+import { formaterNombre } from "@/lib/conversion";
 import type { Pokemon } from "@/types/pokemon";
 import BadgeType from "./BadgeType";
 import BarresStats from "./BarresStats";
@@ -28,20 +29,21 @@ export default function FichePokemon({
         <p className="font-mono text-gray-500">
           #{String(pokemon.id).padStart(3, "0")}
         </p>
-        <div className="mb-2 flex items-center gap-3">
-          <h1 className="text-4xl font-bold">{pokemon.nomAffiche}</h1>
-          <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
-        </div>
+        <h1 className="mb-2 text-4xl font-bold wrap-anywhere">
+          {pokemon.nomAffiche}
+        </h1>
         <div className="mb-4 flex gap-2">
           {pokemon.types.map((type) => (
             <BadgeType key={type} type={type} />
           ))}
         </div>
         <p className="mb-4">
-          {pokemon.taille} m · {pokemon.poids} kg
+          {formaterNombre(pokemon.taille)} m · {formaterNombre(pokemon.poids)}{" "}
+          kg
         </p>
-        <div className="mb-6">
+        <div className="mb-6 flex items-center gap-3">
           <BoutonSacoche pokemon={pokemon} />
+          <BoutonFavori nom={pokemon.nom} libelle={pokemon.nomAffiche} />
         </div>
         <BarresStats stats={pokemon.stats} />
       </div>

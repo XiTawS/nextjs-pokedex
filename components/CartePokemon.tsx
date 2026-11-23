@@ -11,14 +11,14 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
   const teinte = { "--teinte": teinteType(pokemon.types[0]) } as CSSProperties;
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <Link
         href={`/pokemon/${pokemon.nom}`}
-        className="block rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pokedex"
+        className="block h-full rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pokedex"
       >
         <article
           style={teinte}
-          className="group relative overflow-hidden rounded-2xl border border-black/5 bg-white p-4 shadow-sm
+          className="group relative h-full overflow-hidden rounded-2xl border border-black/5 bg-white p-4 shadow-sm
                    transition duration-300 hover:-translate-y-1 hover:shadow-xl
                    motion-reduce:transition-none motion-reduce:hover:translate-y-0
                    dark:border-white/10 dark:bg-gray-900"
@@ -29,7 +29,7 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
           />
           <span
             aria-hidden
-            className="absolute right-3 top-1 text-5xl font-black text-(--teinte)/20"
+            className={`absolute right-3 top-1 font-black text-(--teinte)/20 ${pokemon.id > 9999 ? "text-3xl" : "text-5xl"}`}
           >
             {numero}
           </span>
@@ -41,7 +41,7 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
               height={160}
               className="mx-auto drop-shadow-lg transition duration-300 group-hover:scale-110 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
-            <h2 className="mb-2 mt-1 text-lg font-bold capitalize tracking-tight">
+            <h2 className="mb-2 mt-1 text-lg font-bold tracking-tight wrap-anywhere">
               {pokemon.nomAffiche}
             </h2>
             <div className="flex flex-wrap justify-center gap-1">

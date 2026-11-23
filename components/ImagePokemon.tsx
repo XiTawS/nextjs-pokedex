@@ -18,7 +18,7 @@ export default function ImagePokemon({ sources, alt, width, height, className, .
       <div
         role="img"
         aria-label={alt}
-        style={{ width, height }}
+        style={{ width }} // la hauteur suit la largeur (aspect-square) : reste rond si la carte rétrécit
         className="mx-auto grid aspect-square max-w-full place-items-center rounded-full bg-black/5 text-5xl font-black text-black/20 dark:bg-white/5 dark:text-white/20"
       >
         ?

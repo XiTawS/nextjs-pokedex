@@ -23,7 +23,7 @@ export default function PageSacoche() {
       </div>
       <p className="mb-2 text-gray-500">
         {equipe.length} / {TAILLE_SACOCHE} Pokémon · {typesCouverts.length}{" "}
-        type(s) couvert(s)
+        {typesCouverts.length > 1 ? "types couverts" : "type couvert"}
       </p>
       <div className="mb-6 flex flex-wrap gap-1">
         {typesCouverts.map((type) => (
