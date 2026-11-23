@@ -19,7 +19,7 @@ export default function Accueil({ searchParams }: Props) {
   return (
     <>
       <h1 className="mb-6 text-4xl font-black">Pokédex</h1>
-      <Suspense fallback={<input disabled placeholder="Rechercher un Pokémon" />}>
+      <Suspense fallback={<input disabled placeholder="Rechercher un Pokémon" aria-label="Rechercher un Pokémon" className="w-full rounded-full border border-black/10 px-5 py-3" />}>
         <BarreRecherche />
       </Suspense>
       <Suspense fallback={<SqueletteGrille />}>
