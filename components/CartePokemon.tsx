@@ -1,10 +1,10 @@
 import type { CSSProperties } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import type { Pokemon } from "@/types/pokemon";
 import { teinteType } from "@/lib/types";
 import BadgeType from "./BadgeType";
 import BoutonFavori from "./BoutonFavori";
+import ImagePokemon from "./ImagePokemon";
 
 export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
   const numero = `#${String(pokemon.id).padStart(3, "0")}`;
@@ -34,8 +34,8 @@ export default function CartePokemon({ pokemon }: { pokemon: Pokemon }) {
             {numero}
           </span>
           <div className="relative text-center">
-            <Image
-              src={pokemon.image}
+            <ImagePokemon
+              sources={[pokemon.image]}
               alt={pokemon.nomAffiche}
               width={160}
               height={160}

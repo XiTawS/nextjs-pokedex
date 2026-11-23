@@ -7,7 +7,8 @@ export type Pokemon = {
   id: number;
   nom: string;          // nom de l'API, sert dans les adresses : « mr-mime »
   nomAffiche: string;   // nom français officiel : « M. Mime »
-  image: string;
+  image: string;        // illustration officielle
+  sprite: string | null; // GIF animé de Pokémon Showdown, absent pour certains Pokémon récents
   types: string[];
   taille: number;   // en mètres
   poids: number;    // en kilogrammes
@@ -21,5 +22,10 @@ export type PokemonApi = {
   weight: number;   // en hectogrammes
   types: { type: { name: string } }[];
   stats: { base_stat: number; stat: { name: string } }[];
-  sprites: { other: { "official-artwork": { front_default: string | null } } };
+  sprites: {
+    other: {
+      "official-artwork": { front_default: string | null };
+      showdown?: { front_default: string | null };
+    };
+  };
 };

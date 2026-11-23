@@ -8,6 +8,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Bulbizarre",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/1.gif",
     types: ["grass", "poison"],
     taille: 0.7,
     poids: 6.9,
@@ -26,6 +28,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Salamèche",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif",
     types: ["fire"],
     taille: 0.6,
     poids: 8.5,
@@ -44,6 +48,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Carapuce",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif",
     types: ["water"],
     taille: 0.5,
     poids: 9,
@@ -62,6 +68,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Pikachu",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif",
     types: ["electric"],
     taille: 0.4,
     poids: 6,
@@ -80,6 +88,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Ectoplasma",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/94.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/94.gif",
     types: ["ghost", "poison"],
     taille: 1.5,
     poids: 40.5,
@@ -98,6 +108,8 @@ export const demo: Pokemon[] = [
     nomAffiche: "Dracolosse",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/149.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/149.gif",
     types: ["dragon", "flying"],
     taille: 2.2,
     poids: 210,
@@ -119,6 +131,8 @@ export const demoEvolutions: Pokemon[] = [
     nomAffiche: "Salamèche",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif",
     types: ["fire"],
     taille: 0.6,
     poids: 8.5,
@@ -137,6 +151,8 @@ export const demoEvolutions: Pokemon[] = [
     nomAffiche: "Reptincel",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/5.gif",
     types: ["fire"],
     taille: 1.1,
     poids: 19,
@@ -155,6 +171,8 @@ export const demoEvolutions: Pokemon[] = [
     nomAffiche: "Dracaufeu",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif",
     types: ["fire", "flying"],
     taille: 1.7,
     poids: 90.5,
@@ -176,6 +194,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Tapatoès",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/931.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/931.gif",
     types: ["normal", "flying"],
     taille: 0.6,
     poids: 2.4,
@@ -194,6 +214,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Mew",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/151.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/151.gif",
     types: ["psychic"],
     taille: 0.4,
     poids: 4,
@@ -212,6 +234,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Charizard Mega X",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10034.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/10034.gif",
     types: ["fire", "dragon"],
     taille: 1.7,
     poids: 110.5,
@@ -230,6 +254,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Famignol",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/925.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/925.gif",
     types: ["normal"],
     taille: 0.3,
     poids: 2.8,
@@ -248,6 +274,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Ho-Oh",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/250.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/250.gif",
     types: ["fire", "flying"],
     taille: 3.8,
     poids: 199,
@@ -266,6 +294,7 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Deusolourdo",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/99999.png",
+    sprite: null,
     types: ["normal"],
     taille: 3.6,
     poids: 39.2,
@@ -284,6 +313,8 @@ export const pireCas: Pokemon[] = [
     nomAffiche: "Cosmovum",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/790.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/790.gif",
     types: ["psychic"],
     taille: 0.1,
     poids: 999.9,
@@ -306,6 +337,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Évoli",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/133.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/133.gif",
     types: ["normal"],
     taille: 0.3,
     poids: 6.5,
@@ -324,6 +357,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Aquali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/134.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/134.gif",
     types: ["water"],
     taille: 1,
     poids: 29,
@@ -342,6 +377,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Voltali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/135.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/135.gif",
     types: ["electric"],
     taille: 0.8,
     poids: 24.5,
@@ -360,6 +397,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Pyroli",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/136.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/136.gif",
     types: ["fire"],
     taille: 0.9,
     poids: 25,
@@ -378,6 +417,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Mentali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/196.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/196.gif",
     types: ["psychic"],
     taille: 0.9,
     poids: 26.5,
@@ -396,6 +437,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Noctali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/197.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/197.gif",
     types: ["dark"],
     taille: 1,
     poids: 27,
@@ -414,6 +457,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Phyllali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/470.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/470.gif",
     types: ["grass"],
     taille: 1,
     poids: 25.5,
@@ -432,6 +477,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Givrali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/471.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/471.gif",
     types: ["ice"],
     taille: 0.8,
     poids: 25.9,
@@ -450,6 +497,8 @@ export const pireCasEvolutions: Pokemon[] = [
     nomAffiche: "Nymphali",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/700.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/700.gif",
     types: ["fairy"],
     taille: 1,
     poids: 23.5,
@@ -472,6 +521,8 @@ export const unSeul: Pokemon[] = [
     nomAffiche: "Tauros",
     image:
       "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/128.png",
+    sprite:
+      "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/128.gif",
     types: ["normal"],
     taille: 1.4,
     poids: 88.4,

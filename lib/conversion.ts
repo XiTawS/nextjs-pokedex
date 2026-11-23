@@ -15,6 +15,7 @@ export function versPokemon(brut: PokemonApi, nomFrancais?: string): Pokemon {
     image:
       brut.sprites.other["official-artwork"].front_default ??
       `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${brut.id}.png`,
+    sprite: brut.sprites.other.showdown?.front_default ?? null,
     types: brut.types.map((t) => t.type.name),
     taille: brut.height / 10,
     poids: brut.weight / 10,
