@@ -36,12 +36,17 @@ type EspecesGraphql = {
   data: { pokemonspecies: { pokemons: { name: string }[]; pokemonspeciesnames: { name: string }[] }[] };
 };
 
-async function appelerGraphql<T>(query: string, variables?: Record<string, unknown>): Promise<T> {
+// L'API GraphQL de la PokéAPI limite le nombre d'appels (429) : on réessaie deux fois, puis on abandonne.
+async function appelerGraphql<T>(query: string, essaisRestants = 2): Promise<T> {
   const reponse = await fetch(GRAPHQL, {
     method: "POST",
     headers: { "content-type": "application/json" },
-    body: JSON.stringify({ query, variables }),
+    body: JSON.stringify({ query }),
   });
+  if (reponse.status === 429 && essaisRestants > 0) {
+    await new Promise((fin) => setTimeout(fin, 3000));
+    return appelerGraphql<T>(query, essaisRestants - 1);
+  }
   if (!reponse.ok) throw new Error(`L'API GraphQL de la PokéAPI a répondu ${reponse.status}`);
   return reponse.json() as Promise<T>;
 }
@@ -131,8 +136,10 @@ export async function recupererNomsParType(type: string): Promise<string[]> {
   return tous.filter((nom) => duType.has(nom));
 }
 
-const REQUETE_DETAILS = `query ($id: Int!) {
-  pokemon(where: { id: { _eq: $id } }) {
+// filtre : une condition GraphQL écrite par ce fichier (jamais une saisie de l'utilisateur).
+const requeteDetails = (filtre: string) => `query {
+  pokemon(where: ${filtre}, order_by: { id: asc }) {
+    id
     pokemonabilities(where: { is_hidden: { _eq: false } }, order_by: { slot: asc }, limit: 1) {
       ability { name abilitynames(where: { language_id: { _eq: 5 } }) { name } }
     }
@@ -145,28 +152,29 @@ const REQUETE_DETAILS = `query ($id: Int!) {
   }
 }`;
 
-type DetailsGraphql = {
-  data: {
-    pokemon: {
-      pokemonabilities: { ability: { name: string; abilitynames: { name: string }[] } }[];
-      pokemonspecy: {
-        gender_rate: number;
-        evolves_from_species_id: number | null;
-        pokemonspeciesflavortexts: { flavor_text: string }[];
-        pokemonevolutions: { min_level: number | null }[];
-      } | null;
-    }[];
-  };
+type PokemonDetailsGraphql = {
+  id: number;
+  pokemonabilities: { ability: { name: string; abilitynames: { name: string }[] } }[];
+  pokemonspecy: {
+    gender_rate: number;
+    evolves_from_species_id: number | null;
+    pokemonspeciesflavortexts: { flavor_text: string }[];
+    pokemonevolutions: { min_level: number | null }[];
+  } | null;
+};
+type DetailsGraphql = { data: { pokemon: PokemonDetailsGraphql[] } };
+
+const DETAILS_VIDES: DetailsPokemon = {
+  description: null,
+  talent: null,
+  pourcentageFemelles: null,
+  evolueDUneAutreEspece: false,
+  niveauEvolution: null,
 };
 
-// Ce que la fiche montre en plus des données de base : description, talent, genre, évolution.
-export async function recupererDetails(id: number): Promise<DetailsPokemon> {
-  "use cache";
-  cacheLife("days");
-  const { data } = await appelerGraphql<DetailsGraphql>(REQUETE_DETAILS, { id });
-  const pokemon = data.pokemon[0];
-  const espece = pokemon?.pokemonspecy;
-  const talent = pokemon?.pokemonabilities[0]?.ability;
+function versDetails(pokemon: PokemonDetailsGraphql): DetailsPokemon {
+  const espece = pokemon.pokemonspecy;
+  const talent = pokemon.pokemonabilities[0]?.ability;
   const texte = espece?.pokemonspeciesflavortexts[0]?.flavor_text;
   return {
     // Les textes du jeu contiennent des retours à la ligne et des espaces fines insécables.
@@ -177,4 +185,23 @@ export async function recupererDetails(id: number): Promise<DetailsPokemon> {
     evolueDUneAutreEspece: Boolean(espece?.evolves_from_species_id),
     niveauEvolution: espece?.pokemonevolutions[0]?.min_level ?? null,
   };
+}
+
+// Les détails des 1 025 Pokémon en une requête (≈ 370 ko, 4 s), mise en cache plusieurs jours.
+// Une requête par fiche dépassait la limite de l'API au build (151 fiches → 429).
+async function recupererTousLesDetails(): Promise<Record<number, DetailsPokemon>> {
+  "use cache";
+  cacheLife("days");
+  const { data } = await appelerGraphql<DetailsGraphql>(requeteDetails(`{ id: { _lte: ${TOTAL_POKEMONS} } }`));
+  return Object.fromEntries(data.pokemon.map((pokemon) => [pokemon.id, versDetails(pokemon)]));
+}
+
+// Ce que la fiche montre en plus des données de base : description, talent, genre, évolution.
+export async function recupererDetails(id: number): Promise<DetailsPokemon> {
+  "use cache";
+  cacheLife("days");
+  if (id <= TOTAL_POKEMONS) return (await recupererTousLesDetails())[id] ?? DETAILS_VIDES;
+  // Formes (Méga, Gigamax…, n° 10001 et plus) : rares, demandées une à une.
+  const { data } = await appelerGraphql<DetailsGraphql>(requeteDetails(`{ id: { _eq: ${Math.trunc(id)} } }`));
+  return data.pokemon[0] ? versDetails(data.pokemon[0]) : DETAILS_VIDES;
 }
