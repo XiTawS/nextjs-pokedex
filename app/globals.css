@@ -32,26 +32,27 @@
 }
 
 /* Couleurs vives, pour les fonds décoratifs (en-tête de fiche, cartes) : jamais sous du texte.
-   Variables CSS simples : lues par var() à l'exécution, Tailwind n'a pas à générer de classes. */
+   Hors de l'espace --color-* : Tailwind y retire les variables qu'il ne voit utilisées nulle part dans le code,
+   or celles-ci ne sont lues qu'à l'exécution (var(--vif-${type})). */
 :root {
-  --color-vif-normal: #a8a77a;
-  --color-vif-fire: #ee8130;
-  --color-vif-water: #6390f0;
-  --color-vif-electric: #f7d02c;
-  --color-vif-grass: #7ac74c;
-  --color-vif-ice: #96d9d6;
-  --color-vif-fighting: #c22e28;
-  --color-vif-poison: #a33ea1;
-  --color-vif-ground: #e2bf65;
-  --color-vif-flying: #a98ff3;
-  --color-vif-psychic: #f95587;
-  --color-vif-bug: #a6b91a;
-  --color-vif-rock: #b6a136;
-  --color-vif-ghost: #735797;
-  --color-vif-dragon: #6f35fc;
-  --color-vif-dark: #705746;
-  --color-vif-steel: #b7b7ce;
-  --color-vif-fairy: #d685ad;
+  --vif-normal: #a8a77a;
+  --vif-fire: #ee8130;
+  --vif-water: #6390f0;
+  --vif-electric: #f7d02c;
+  --vif-grass: #7ac74c;
+  --vif-ice: #96d9d6;
+  --vif-fighting: #c22e28;
+  --vif-poison: #a33ea1;
+  --vif-ground: #e2bf65;
+  --vif-flying: #a98ff3;
+  --vif-psychic: #f95587;
+  --vif-bug: #a6b91a;
+  --vif-rock: #b6a136;
+  --vif-ghost: #735797;
+  --vif-dragon: #6f35fc;
+  --vif-dark: #705746;
+  --vif-steel: #b7b7ce;
+  --vif-fairy: #d685ad;
 }
 
 :root {
