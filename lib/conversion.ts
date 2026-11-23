@@ -3,9 +3,11 @@ import type { Pokemon, PokemonApi } from "@/types/pokemon";
 export const API = "https://pokeapi.co/api/v2";
 
 // « 1 025 », « 999,9 » : séparateurs français.
-export const formaterNombre = new Intl.NumberFormat("fr-FR", {
-  maximumFractionDigits: 1,
-}).format;
+const formatFrancais = new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 1 });
+// Intl sépare les milliers par une espace fine insécable (U+202F), absente de la police
+// du thème (Figtree) : on la remplace par une espace insécable ordinaire.
+export const formaterNombre = (nombre: number) =>
+  formatFrancais.format(nombre).replace(/ /g, " ");
 
 // Repli quand le nom français manque (formes comme « charizard-mega-x ») : « Charizard Mega X ».
 export function formaterNom(nom: string): string {

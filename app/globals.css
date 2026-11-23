@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@astryxdesign/core/reset.css";
+@import "@astryxdesign/core/astryx.css";
 
 @theme {
   --color-pokedex: #d2232f;
