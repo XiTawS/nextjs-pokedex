@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import BadgeType from "@/components/BadgeType";
 import BoutonVider from "@/components/BoutonVider";
+import { useTypesCouverts } from "@/hooks/useTypesCouverts";
 import { TAILLE_SACOCHE, useSacoche } from "@/stores/sacoche";
 
 export default function PageSacoche() {
@@ -10,7 +11,7 @@ export default function PageSacoche() {
   const retirer = useSacoche((etat) => etat.retirer);
   const renommer = useSacoche((etat) => etat.renommer);
 
-  const typesCouverts = [...new Set(equipe.flatMap((membre) => membre.types))];
+  const typesCouverts = useTypesCouverts();
   const emplacementsLibres = TAILLE_SACOCHE - equipe.length;
 
   return (
