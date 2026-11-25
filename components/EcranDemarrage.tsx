@@ -13,12 +13,13 @@ export default function EcranDemarrage() {
         suppressHydrationWarning // le script peut ajouter « hidden » avant l'hydratation
         className="demarrage fixed inset-0 z-100 grid place-items-center bg-background motion-reduce:hidden"
       >
-        <svg viewBox="0 0 100 100" className="size-28">
+        <svg viewBox="0 0 100 100" className="size-28 overflow-visible">
           <defs>
             <clipPath id="demarrage-haut">
               <path d={HAUT} />
             </clipPath>
           </defs>
+          {/* overflow-visible : en tremblant, la balle déborde du cadre du SVG, qui la couperait en carré. */}
           <g className="demarrage-balle">
             <circle cx="50" cy="50" r="46" fill="#fff" />
             <path d={HAUT} fill="#e5e7eb" />
