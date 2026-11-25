@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import BoutonHasard from "./BoutonHasard";
 import CompteurFavoris from "./CompteurFavoris";
+import IconeGithub from "./IconeGithub";
 import IconePokeball from "./IconePokeball";
 import IndicateurSacoche from "./IndicateurSacoche";
 import LienNav from "./LienNav";
@@ -32,6 +33,13 @@ export default function EnTete() {
             </LienNav>
           </Suspense>
           <BoutonHasard />
+          <a
+            href="https://github.com/XiTawS/nextjs-pokedex"
+            className="flex items-center gap-1.5 text-sm font-medium text-gray-600 transition hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+          >
+            <IconeGithub className="size-5" />
+            GitHub
+          </a>
         </nav>
       </div>
     </header>
