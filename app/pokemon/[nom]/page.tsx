@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import FichePokemon from "@/components/FichePokemon";
 import {
   recupererDetails,
@@ -32,15 +31,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function PageFiche({ params }: Props) {
-  return (
-    <Suspense fallback={<p>Chargement de la fiche…</p>}>
-      <Fiche params={params} />
-    </Suspense>
-  );
-}
-
-async function Fiche({ params }: Props) {
+// Le squelette de loading.tsx s'affiche pendant le chargement, y compris d'un Pokémon à l'autre.
+export default async function PageFiche({ params }: Props) {
   const { nom } = await params;
   const pokemon = await recupererPokemon(nom);
   if (!pokemon) notFound();

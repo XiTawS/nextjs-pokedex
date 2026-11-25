@@ -1,6 +1,7 @@
 "use client";
 import Image, { type ImageProps } from "next/image";
 import { useState } from "react";
+import { useChromatique, versChromatique } from "@/stores/chromatique";
 
 type Props = Omit<ImageProps, "src" | "alt"> & {
   sources: (string | null)[]; // essayées dans l'ordre
@@ -11,7 +12,9 @@ type Props = Omit<ImageProps, "src" | "alt"> & {
 // affiche un emplacement neutre plutôt que l'icône d'image cassée et le texte alternatif en vrac.
 export default function ImagePokemon({ sources, alt, width, height, className, ...props }: Props) {
   const [echecs, setEchecs] = useState<string[]>([]);
-  const src = sources.find((source): source is string => !!source && !echecs.includes(source));
+  const chromatique = useChromatique((etat) => etat.actif);
+  const essais = chromatique ? sources.flatMap((s) => (s ? [versChromatique(s), s] : [])) : sources;
+  const src = essais.find((source): source is string => !!source && !echecs.includes(source));
 
   if (!src) {
     return (

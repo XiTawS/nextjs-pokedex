@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import { useCallback, useRef, useState, useTransition } from "react";
 import { useRaccourci } from "@/hooks/useRaccourci";
 import { useRappelTemporise } from "@/hooks/useRappelTemporise";
+import { useBasculerChromatique } from "@/stores/chromatique";
 
 export default function BarreRecherche() {
   const router = useRouter();
@@ -12,6 +13,7 @@ export default function BarreRecherche() {
   const [texte, setTexte] = useState(parametres.get("q") ?? "");
   const [enAttente, demarrer] = useTransition();
   const champ = useRef<HTMLInputElement>(null);
+  const basculerChromatique = useBasculerChromatique();
 
   useRaccourci("/", useCallback(() => champ.current?.focus(), []));
 
@@ -31,8 +33,11 @@ export default function BarreRecherche() {
         type="search"
         value={texte}
         onChange={(e) => {
-          setTexte(e.target.value);
-          naviguer(e.target.value);
+          // Œuf de Pâques : le mot secret ne cherche rien, il bascule le mode chromatique.
+          const secret = /^(shiny|chromatique)$/i.test(e.target.value.trim());
+          if (secret) basculerChromatique();
+          setTexte(secret ? "" : e.target.value);
+          naviguer(secret ? "" : e.target.value);
         }}
         placeholder="Rechercher un Pokémon"
         aria-label="Rechercher un Pokémon"
