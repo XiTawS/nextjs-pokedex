@@ -76,3 +76,37 @@ body {
   background: var(--background);
   color: var(--foreground);
 }
+
+/* Écran de démarrage (EcranDemarrage) : remplissage et tremblements, clic du bouton, puis l'écran s'efface. */
+.demarrage {
+  animation: demarrage-sortie 0.3s ease-out 1.05s forwards;
+}
+.demarrage svg * {
+  transform-box: fill-box;
+}
+.demarrage-balle {
+  transform-origin: 50% 100%;
+  animation: demarrage-tremble 0.75s ease-in-out 0.1s;
+}
+.demarrage-remplissage {
+  transform-origin: 50% 100%;
+  animation: demarrage-remplit 0.85s cubic-bezier(0.65, 0, 0.35, 1) both;
+}
+.demarrage-bouton {
+  transform-origin: center;
+  animation: demarrage-clic 0.25s ease-out 0.85s;
+}
+@keyframes demarrage-sortie {
+  to { opacity: 0; visibility: hidden; }
+}
+@keyframes demarrage-remplit {
+  from { transform: scaleY(0); }
+}
+@keyframes demarrage-tremble {
+  0%, 50%, 100% { transform: rotate(0); }
+  15%, 65% { transform: rotate(-14deg); }
+  35%, 85% { transform: rotate(10deg); }
+}
+@keyframes demarrage-clic {
+  50% { transform: scale(1.6); fill: #fde047; }
+}
